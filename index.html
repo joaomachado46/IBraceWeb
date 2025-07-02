@@ -60,9 +60,10 @@
             📩 Contactar
         </button>
 
-        <div id="contact-form" style="display:none; max-width:400px; margin:0 auto;">
+        <div id="contact-form" style="max-width:400px; margin:0 auto;">
             <h2>Fale connosco</h2>
-            <form target="_blank" action="https://formsubmit.co/joaopcmachado46@gmail.com" method="POST">
+            <form name="contact" method="POST" netlify>
+                <input type="hidden" name="form-name" value="contact" />
                 <input type="text" name="name" placeholder="Nome Completo" required style="width:100%; padding:0.5rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px;" />
                 <input type="email" name="email" placeholder="Email" required style="width:100%; padding:0.5rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px;" />
                 <textarea name="message" rows="6" placeholder="Sua Mensagem" required style="width:100%; padding:0.5rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px;"></textarea>
