@@ -52,3 +52,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/.vs/IBraceHomePage/CopilotIndices/17.14.734.62261
+/.vs/IBraceHomePage/FileContentIndex
+/.vs/IBraceHomePage/v17
+/.vs/slnx.sqlite
