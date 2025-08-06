@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\pages\\products",
-    "\\pages\\products\\css"
+    "\\pages\\contacto\\css",
+    "\\pages\\contacto\\js",
+    "\\pages\\products"
   ],
-  "SelectedNode": "\\index.html",
+  "SelectedNode": "\\pages",
   "PreviewInSolutionExplorer": false
 }

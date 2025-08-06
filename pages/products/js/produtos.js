@@ -55,3 +55,54 @@ window.addEventListener('scroll', function () {
         }
     });
 });
+
+ // Adicionar evento de clique nos botões "Comprar"
+        document.querySelectorAll('.btn.comprar').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productId = this.getAttribute('data-product-id');
+                const productElement = this.closest('.product');
+                
+                const productData = {
+                    id: productId,
+                    name: productElement.getAttribute('data-name'),
+                    price: parseFloat(productElement.getAttribute('data-price')),
+                    image: productElement.querySelector('img').src
+                };
+                
+                // Efeito visual ao adicionar
+                this.classList.add('added');
+                setTimeout(() => {
+                    this.classList.remove('added');
+                }, 500);
+                
+                // Adicionar ao carrinho
+                addToCart(productData);
+                
+                // Redirecionar para o carrinho após breve delay
+                setTimeout(() => {
+                    window.location.href = '../carrinho/index.html';
+                }, 500);
+            });
+        });
+        
+        // Função para adicionar item ao carrinho
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1,
+                    image: product.image
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }

@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iBrace - Carrinho de Compras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e Estilos Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #1f2937;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #ffffff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #2d89ef;
+            font-weight: 600;
+            font-size: 1.05rem;
+            position: relative;
+        }
+
+        .user-container {
+            position: relative;
+        }
+
+        .user-icon {
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e0f2fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .user-icon:hover {
+            background-color: #2d89ef;
+            color: white;
+        }
+
+        /* Dropdown Menu */
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .user-dropdown.show {
+            display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-dropdown a {
+            color: #1f2937;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f0f4f8;
+            color: #2d89ef;
+        }
+
+        .user-dropdown a.logout {
+            color: #e53e3e;
+        }
+
+        .user-dropdown a.logout:hover {
+            background-color: #fff5f5;
+        }
+
+        /* Modal de Login */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilos do Carrinho */
+        main {
+            flex: 1;
+            padding: 2rem 1rem;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2d89ef;
+        }
+
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            padding: 0 1rem;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #e0f2fe;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #e53e3e;
+            margin-left: 0.5rem;
+        }
+
+        .cart-item-price {
+            font-weight: 600;
+            color: #2d89ef;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-data-form, .payment-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2d89ef;
+            box-shadow: 0 0 0 3px rgba(45,137,239,0.2);
+        }
+
+        .checkout-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .order-summary {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .summary-row.total {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Botão CTA */
+        .cta-button {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+            padding: 1rem 1.5rem;
+            border: none;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: inline-block;
+            white-space: nowrap;
+            text-align: center;
+            min-width: max-content;
+            width: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Efeito de pulso */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+        }
+
+        .cta-button.pulse {
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* Mensagens */
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #8c82ee;
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 1.5rem;
+        }
+
+        /* Responsividade */
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .cart-content {
+                grid-template-columns: 2fr 1fr;
+            }
+            
+            .checkout-section {
+                position: sticky;
+                top: 1rem;
+            }
+        }
+
+        /* Novos estilos adicionados */
+        .bracelet-form {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .bracelet-form h3 {
+            color: #2d89ef;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bracelet-form h3 .badge {
+            background-color: #2d89ef;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .forms-container {
+            margin-top: 2rem;
+        }
+
+        .products-hero h1 {
+        font-size: 2rem;
+    }
+
+    /* Hero Section */
+.products-hero {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    text-align: center;
+    padding: 4rem 2rem;
+    color: white;
+    margin-bottom: 3rem;
+}
+
+    .products-hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        animation: slideIn 0.8s ease-out 0.2s both;
+    }
+
+    .products-hero p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+        animation: slideIn 0.8s ease-out 0.4s both;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="menu">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../products/index.html">Produtos</a></li>
+                <li><a href="../contacto/index.html">Contactos</a></li>
+            </ul>
+        </nav>
+        <div class="user-container">
+            <div class="user-icon" id="userIcon">👤</div>
+            <div class="user-dropdown" id="userDropdown">
+                <a href="../../index.html">Voltar à Home</a>
+                <a href="#" id="logoutBtn" class="logout">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal de Login -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>Área do Utilizador</h2>
+            <div id="loginMessage" class="message"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Utilizador</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="products-hero">
+        <h1>Seu Carrinho</h1>
+    </section>
+
+    <main class="cart-container">
+        <div class="cart-content">
+            <div class="cart-items-section">
+                <div class="cart-items" id="cartItemsContainer">
+                    <!-- Itens serão adicionados dinamicamente -->
+                </div>
+
+                <div class="forms-container" id="braceletFormsContainer">
+                    <!-- Formulários das pulseiras serão adicionados dinamicamente -->
+                </div>
+            </div>
+
+            <div class="checkout-section">
+                <div class="payment-section">
+                    <h2>💳 Método de Pagamento</h2>
+                    <div class="payment-method">
+                        <input type="radio" id="mbway" name="paymentMethod" value="MBWay" checked>
+                        <label for="mbway">MBWay</label>
+                    </div>
+                    
+                    <div class="mbway-details">
+                        <div class="form-group">
+                            <label for="mbwayPhone">Telemóvel MBWay</label>
+                            <input type="tel" id="mbwayPhone" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h2>🧾 Resumo do Pedido</h2>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">€0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Portes</span>
+                        <span id="shipping">€2.50</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="total">€0.00</span>
+                    </div>
+                    
+                    <button id="checkoutBtn" class="cta-button pulse">Finalizar Compra</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="paymentMessage" class="message"></div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>iBrace</h3>
+                <p>Segurança, saúde e tranquilidade para toda a família.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contactos</h3>
+                <p>geral@ibrace.com</p>
+                <p>+351 123 456 789</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../products/index.html">Produtos</a></li>
+                    <li><a href="../contacto/index.html">Contactos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 iBrace. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Elementos DOM
+const userIcon = document.getElementById('userIcon');
+const userDropdown = document.getElementById('userDropdown');
+const logoutBtn = document.getElementById('logoutBtn');
+const loginModal = document.getElementById('loginModal');
+const loginForm = document.getElementById('loginForm');
+const cartItemsContainer = document.getElementById('cartItemsContainer');
+const braceletFormsContainer = document.getElementById('braceletFormsContainer');
+const checkoutBtn = document.getElementById('checkoutBtn');
+const paymentMessage = document.getElementById('paymentMessage');
+const subtotalElement = document.getElementById('subtotal');
+const totalElement = document.getElementById('total');
+const mbwayPhoneInput = document.getElementById('mbwayPhone');
+
+// Configuração da API
+const API_BASE_URL = 'https://appnfcinformation-c8hah7bvgmeecvff.westeurope-01.azurewebsites.net/v1/';
+
+// Carrinho de exemplo (substitua pelos dados reais)
+let cart = [
+    {
+        id: 1,
+        name: 'Pulseira iBrace NFC',
+        price: 19.99,
+        quantity: 1,
+        image: 'img/nfcBraceColor.png'
+    }
+];
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    renderCartItems();
+    loadUserData();
+    setupEventListeners();
+});
+
+// Funções principais
+function setupEventListeners() {
+    // User dropdown
+    userIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isLoggedIn()) {
+            userDropdown.classList.toggle('show');
+        } else {
+            loginModal.style.display = 'flex';
+        }
+    });
+
+    // Fechar dropdown ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.user-container')) {
+            userDropdown.classList.remove('show');
+        }
+    });
+
+    // Login modal - fechar ao clicar fora
+    loginModal.addEventListener('click', function(e) {
+        if (e.target === loginModal) {
+            loginModal.style.display = 'none';
+            if (isUserAreaPage()) {
+                window.location.href = '../../index.html';
+            }
+        }
+    });
+
+    // Logout
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('authToken');
+        window.location.href = '../../index.html';
+    });
+
+    // Finalizar compra
+    checkoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        processPayment();
+    });
+}
+
+function isUserAreaPage() {
+    return window.location.pathname.includes('/userArea/') || 
+           window.location.pathname.includes('/pages/userArea/');
+}
+
+function isLoggedIn() {
+    return !!localStorage.getItem('authToken');
+}
+
+function loadUserData() {
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+    
+    fetch(`${API_BASE_URL}user/data`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Preencher o primeiro formulário com dados do usuário
+        const firstForm = document.querySelector('.bracelet-data-form');
+        if (firstForm) {
+            const braceletId = firstForm.dataset.braceletId;
+            document.getElementById(`fullName-${braceletId}`).value = data.fullName || '';
+            document.getElementById(`phone-${braceletId}`).value = data.phone || '';
+            document.getElementById(`emergencyContact-${braceletId}`).value = data.emergencyContact || '';
+            document.getElementById(`allergies-${braceletId}`).value = data.allergies || '';
+            document.getElementById(`medication-${braceletId}`).value = data.medication || '';
+            document.getElementById(`bloodType-${braceletId}`).value = data.bloodType || '';
+            
+            if (data.phone) {
+                mbwayPhoneInput.value = data.phone;
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao carregar dados do usuário:', error);
+    });
+}
+
+function renderCartItems() {
+    cartItemsContainer.innerHTML = '';
+    braceletFormsContainer.innerHTML = '';
+    
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-cart">O seu carrinho está vazio.</p>';
+        return;
+    }
+    
+    // Renderizar itens do carrinho
+    cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-item-details">
+                <h3>${item.name}</h3>
+                <div class="item-quantity">
+                    <button class="quantity-btn" data-id="${item.id}" data-action="decrease">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" data-id="${item.id}" data-action="increase">+</button>
+                </div>
+            </div>
+            <div class="cart-item-price">
+                <span>€${(item.price * item.quantity).toFixed(2)}</span>
+                <button class="remove-btn" data-id="${item.id}">×</button>
+            </div>
+        `;
+        cartItemsContainer.appendChild(itemElement);
+    });
+    
+    // Adicionar event listeners para os botões de quantidade e remoção
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const itemId = parseInt(this.dataset.id);
+            const action = this.dataset.action;
+            updateItemQuantity(itemId, action);
+        });
+    });
+    
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const itemId = parseInt(this.dataset.id);
+            removeItem(itemId);
+        });
+    });
+    
+    // Renderizar formulários para cada pulseira
+    renderBraceletForms();
+    
+    updateTotals();
+}
+
+function renderBraceletForms() {
+    const totalBracelets = cart.reduce((sum, item) => sum + item.quantity, 0);
+    
+    for (let i = 1; i <= totalBracelets; i++) {
+        const formElement = document.createElement('div');
+        formElement.className = 'bracelet-form';
+        formElement.innerHTML = `
+            <h3><span class="badge">${i}</span> Dados da Pulseira ${i}</h3>
+            <form class="bracelet-data-form" data-bracelet-id="${i}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName-${i}">Nome Completo</label>
+                        <input type="text" id="fullName-${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone-${i}">Telefone</label>
+                        <input type="tel" id="phone-${i}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="emergencyContact-${i}">Contacto de Emergência</label>
+                    <input type="tel" id="emergencyContact-${i}" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="allergies-${i}">Alergias</label>
+                        <textarea id="allergies-${i}" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="medication-${i}">Medicação</label>
+                        <textarea id="medication-${i}" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bloodType-${i}">Tipo Sanguíneo</label>
+                    <select id="bloodType-${i}" required>
+                        <option value="">Selecione</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+            </form>
+        `;
+        braceletFormsContainer.appendChild(formElement);
+    }
+}
+
+function updateItemQuantity(itemId, action) {
+    const itemIndex = cart.findIndex(item => item.id === itemId);
+    if (itemIndex === -1) return;
+    
+    if (action === 'increase') {
+        cart[itemIndex].quantity += 1;
+    } else if (action === 'decrease' && cart[itemIndex].quantity > 1) {
+        cart[itemIndex].quantity -= 1;
+    }
+    
+    renderCartItems();
+}
+
+function removeItem(itemId) {
+    cart = cart.filter(item => item.id !== itemId);
+    renderCartItems();
+}
+
+function updateTotals() {
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = 2.50;
+    const total = subtotal + shipping;
+    
+    subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
+    totalElement.textContent = `€${total.toFixed(2)}`;
+}
+
+function processPayment() {
+    showMessage(paymentMessage, 'A processar o pagamento...', 'info');
+    
+    // Validar todos os formulários
+    const forms = document.querySelectorAll('.bracelet-data-form');
+    let allValid = true;
+    
+    forms.forEach(form => {
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            allValid = false;
+        }
+    });
+    
+    if (!allValid) {
+        showMessage(paymentMessage, 'Por favor, preencha todos os campos obrigatórios', 'error');
+        return;
+    }
+    
+    if (!mbwayPhoneInput.checkValidity()) {
+        showMessage(paymentMessage, 'Por favor, insira um número de telemóvel MBWay válido', 'error');
+        return;
+    }
+    
+    // Preparar dados para enviar à API
+    const paymentData = {
+        paymentMethod: 'MBWay',
+        mbwayPhone: mbwayPhoneInput.value,
+        totalAmount: parseFloat(totalElement.textContent.replace('€', '')),
+        bracelets: [],
+        items: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        }))
+    };
+    
+    // Coletar dados de todas as pulseiras
+    forms.forEach(form => {
+        const braceletId = form.dataset.braceletId;
+        paymentData.bracelets.push({
+            fullName: document.getElementById(`fullName-${braceletId}`).value,
+            phone: document.getElementById(`phone-${braceletId}`).value,
+            emergencyContact: document.getElementById(`emergencyContact-${braceletId}`).value,
+            allergies: document.getElementById(`allergies-${braceletId}`).value,
+            medication: document.getElementById(`medication-${braceletId}`).value,
+            bloodType: document.getElementById(`bloodType-${braceletId}`).value
+        });
+    });
+    
+    // Enviar para a API
+    fetch(`${API_BASE_URL}orders`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify(paymentData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro na resposta da API');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showMessage(paymentMessage, 'Compra realizada com sucesso! Redirecionando...', 'success');
+            // Limpar carrinho após sucesso
+            cart = [];
+            setTimeout(() => {
+                window.location.href = '../../index.html';
+            }, 2000);
+        } else {
+            throw new Error(data.message || 'Erro no processamento do pedido');
+        }
+    })
+    .catch(error => {
+        showMessage(paymentMessage, error.message || 'Ocorreu um erro ao processar o pagamento', 'error');
+        console.error('Erro no pagamento:', error);
+    });
+}
+
+function showMessage(element, text, type) {
+    element.textContent = text;
+    element.className = `message ${type}`;
+    element.style.display = 'block';
+    
+    // Esconder a mensagem após 5 segundos
+    setTimeout(() => {
+        element.style.display = 'none';
+    }, 5000);
+}
+    </script>
+</body>
+</html>

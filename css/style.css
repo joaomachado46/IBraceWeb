@@ -69,19 +69,31 @@ body {
 header {
     background-color: #ffffff;
     padding: 1rem 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
     z-index: 999;
     animation: fadeIn 0.8s ease-out;
 }
 
+.menu {
+    position: relative;
+    /* Para posicionar o ícone corretamente */
+    width: 100%;
+}
+
 .menu ul {
     list-style: none;
     display: flex;
     justify-content: center;
+    /* Centraliza os itens */
     gap: 2rem;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    /* Importante para o posicionamento */
 }
+
 
 .menu a {
     text-decoration: none;
@@ -92,24 +104,24 @@ header {
     transition: color 0.3s;
 }
 
-    .menu a::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -4px;
-        width: 0%;
-        height: 2px;
-        background-color: #2d89ef;
-        transition: width 0.3s ease;
-    }
+.menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background-color: #2d89ef;
+    transition: width 0.3s ease;
+}
 
-    .menu a:hover {
-        color: #1b6cd7;
-    }
+.menu a:hover {
+    color: #1b6cd7;
+}
 
-        .menu a:hover::after {
-            width: 100%;
-        }
+.menu a:hover::after {
+    width: 100%;
+}
 
 .hero {
     background: linear-gradient(135deg, #6e8efb, #a777e3);
@@ -119,17 +131,17 @@ header {
     overflow: hidden;
 }
 
-    /* Bolhas animadas no background */
-    .hero::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="5" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="70" r="8" fill="rgba(255,255,255,0.1)"/><circle cx="150" cy="30" r="10" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="120" r="7" fill="rgba(255,255,255,0.1)"/><circle cx="170" cy="150" r="5" fill="rgba(255,255,255,0.1)"/><circle cx="100" cy="180" r="8" fill="rgba(255,255,255,0.1)"/></svg>');
-        animation: float 15s infinite ease-in-out;
-    }
+/* Bolhas animadas no background */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="5" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="70" r="8" fill="rgba(255,255,255,0.1)"/><circle cx="150" cy="30" r="10" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="120" r="7" fill="rgba(255,255,255,0.1)"/><circle cx="170" cy="150" r="5" fill="rgba(255,255,255,0.1)"/><circle cx="100" cy="180" r="8" fill="rgba(255,255,255,0.1)"/></svg>');
+    animation: float 15s infinite ease-in-out;
+}
 
 .hero-content {
     position: relative;
@@ -149,26 +161,28 @@ header {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     animation: slideIn 0.8s ease-out 0.2s both;
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
-    color: rgba(255,255,255,0.9);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     animation: slideIn 0.8s ease-out 0.4s both;
 }
 
 .cta-button {
     background: linear-gradient(45deg, #FF6B6B, #FF8E53);
     color: white;
-    padding: 1rem 2.5rem;
+    padding: 1rem 1.5rem;
+    /* Reduzi o padding horizontal */
     border: none;
-    text-decoration: none; /* Isso remove o sublinhado */
+    text-decoration: none;
     border-radius: 50px;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    /* Tamanho de fonte ligeiramente menor */
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -178,34 +192,41 @@ header {
     z-index: 1;
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-block;
+    /* Garante que o botão não ocupe toda a largura */
+    white-space: nowrap;
+    /* Impede a quebra de texto */
+    text-align: center;
+    min-width: max-content;
+    /* Garante que o botão tenha largura mínima adequada */
 }
 
-    .cta-button::before {
-        content: '';
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #FF8E53, #FF6B6B);
-        transition: all 0.6s ease;
-        z-index: -1;
-    }
+.cta-button::before {
+    content: '';
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #FF8E53, #FF6B6B);
+    transition: all 0.6s ease;
+    z-index: -1;
+}
 
-    .cta-button:hover {
-        transform: translateY(-3px) scale(1.03);
-        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    }
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
 
-        .cta-button:hover::before {
-            left: 0;
-            animation: shine 1.5s infinite;
-        }
+.cta-button:hover::before {
+    left: 0;
+    animation: shine 1.5s infinite;
+}
 
-    .cta-button:active {
-        transform: translateY(1px);
-        box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
-    }
+.cta-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+}
 
 @keyframes shine {
     0% {
@@ -241,6 +262,16 @@ header {
     animation: pulse-glow 2s infinite;
 }
 
+/* Media Query para telas muito pequenas */
+@media (max-width: 400px) {
+    .cta-button {
+        font-size: 0.9rem;
+        /* Tamanho menor para telas muito pequenas */
+        padding: 0.8rem 1.2rem;
+        /* Padding reduzido */
+    }
+}
+
 .features {
     display: flex;
     flex-wrap: wrap;
@@ -256,31 +287,31 @@ header {
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     opacity: 0;
     transform: translateY(20px);
 }
 
-    .feature.animated {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.feature.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-    .feature:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
 
-    .feature img {
-        width: 60px;
-        margin-bottom: 1rem;
-        transition: transform 0.3s ease;
-    }
+.feature img {
+    width: 60px;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
 
-    .feature:hover img {
-        transform: scale(1.1);
-    }
+.feature:hover img {
+    transform: scale(1.1);
+}
 
 /* Animação para as features */
 @keyframes featureAnimation {
@@ -309,30 +340,30 @@ main.hero {
     margin-top: 2rem;
 }
 
-    .pages-buttons .btn {
-        text-decoration: none;
-        padding: 1rem;
-        background: #e2e8f0;
-        border-radius: 8px;
-        width: 180px;
-        text-align: center;
-        color: #1f2937;
-        font-weight: 600;
-        transition: all 0.3s;
-        opacity: 0;
-        transform: scale(0.95);
-    }
+.pages-buttons .btn {
+    text-decoration: none;
+    padding: 1rem;
+    background: #e2e8f0;
+    border-radius: 8px;
+    width: 180px;
+    text-align: center;
+    color: #1f2937;
+    font-weight: 600;
+    transition: all 0.3s;
+    opacity: 0;
+    transform: scale(0.95);
+}
 
-        .pages-buttons .btn.animated {
-            opacity: 1;
-            transform: scale(1);
-            animation: fadeIn 0.5s ease-out;
-        }
+.pages-buttons .btn.animated {
+    opacity: 1;
+    transform: scale(1);
+    animation: fadeIn 0.5s ease-out;
+}
 
-        .pages-buttons .btn:hover {
-            background: #cbd5e1;
-            transform: translateY(-3px) scale(1.02);
-        }
+.pages-buttons .btn:hover {
+    background: #cbd5e1;
+    transform: translateY(-3px) scale(1.02);
+}
 
 .contact-section {
     background: #ffffff;
@@ -340,56 +371,56 @@ main.hero {
     border-radius: 12px;
     max-width: 480px;
     margin: 3rem auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s ease;
 }
 
-    .contact-section.animated {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.contact-section.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-    .contact-section h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
+.contact-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
 
-    .contact-section form input,
-    .contact-section form textarea {
-        width: 100%;
-        padding: 0.75rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        transition: border-color 0.3s;
-    }
+.contact-section form input,
+.contact-section form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+}
 
-        .contact-section form input:focus,
-        .contact-section form textarea:focus {
-            border-color: #2d89ef;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(45, 137, 239, 0.2);
-        }
+.contact-section form input:focus,
+.contact-section form textarea:focus {
+    border-color: #2d89ef;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(45, 137, 239, 0.2);
+}
 
-    .contact-section button {
-        background: #2d89ef;
-        color: white;
-        border: none;
-        padding: 0.8rem;
-        width: 100%;
-        border-radius: 6px;
-        font-size: 1rem;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s;
-    }
+.contact-section button {
+    background: #2d89ef;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
 
-        .contact-section button:hover {
-            background: #1b6cd7;
-            transform: translateY(-2px);
-        }
+.contact-section button:hover {
+    background: #1b6cd7;
+    transform: translateY(-2px);
+}
 
 .image-preview {
     display: flex;
@@ -401,23 +432,23 @@ main.hero {
     transition: all 0.6s ease;
 }
 
-    .image-preview.animated {
-        opacity: 1;
-        transform: scale(1);
-    }
+.image-preview.animated {
+    opacity: 1;
+    transform: scale(1);
+}
 
-    .image-preview img {
-        max-width: 100%;
-        width: 388px;
-        border-radius: 15px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transition: transform 0.5s ease, box-shadow 0.5s ease;
-    }
+.image-preview img {
+    max-width: 100%;
+    width: 388px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
 
-        .image-preview img:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
+.image-preview img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
 
 .contact-section {
     background: #ffffff;
@@ -425,7 +456,7 @@ main.hero {
     border-radius: 12px;
     max-width: 480px;
     margin: 3rem auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -444,11 +475,11 @@ main.hero {
     margin-bottom: 0;
 }
 
-    #btn-contactar:hover {
-        background: #a777e3d4;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(45, 137, 239, 0.4);
-    }
+#btn-contactar:hover {
+    background: #a777e3d4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(45, 137, 239, 0.4);
+}
 
 #contact-form {
     max-height: 0;
@@ -457,62 +488,63 @@ main.hero {
     opacity: 0;
 }
 
-    #contact-form.show {
-        max-height: 800px; /* Ajuste conforme necessário */
-        opacity: 1;
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid #e2e8f0;
-    }
+#contact-form.show {
+    max-height: 800px;
+    /* Ajuste conforme necessário */
+    opacity: 1;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
 
-    #contact-form h2 {
-        color: #1f2937;
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
-    }
+#contact-form h2 {
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
 
-    #contact-form input,
-    #contact-form textarea {
-        width: 100%;
-        padding: 0.75rem;
-        margin-bottom: 1rem;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        font-family: 'Inter', sans-serif;
-        transition: all 0.3s;
-    }
+#contact-form input,
+#contact-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s;
+}
 
-        #contact-form input:focus,
-        #contact-form textarea:focus {
-            border-color: #2d89ef;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(45, 137, 239, 0.2);
-        }
+#contact-form input:focus,
+#contact-form textarea:focus {
+    border-color: #2d89ef;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(45, 137, 239, 0.2);
+}
 
-    #contact-form textarea {
-        resize: vertical;
-        min-height: 120px;
-    }
+#contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
 
-    #contact-form button[type="submit"] {
-        background: #a777e3d4;
-        color: white;
-        border: none;
-        padding: 0.8rem;
-        width: 100%;
-        border-radius: 8px;
-        font-size: 1rem;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s;
-        margin-top: 0.5rem;
-    }
+#contact-form button[type="submit"] {
+    background: #a777e3d4;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+}
 
-        #contact-form button[type="submit"]:hover {
-            background: #1b6cd7;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+#contact-form button[type="submit"]:hover {
+    background: #1b6cd7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
 footer {
     text-align: center;
@@ -520,4 +552,37 @@ footer {
     font-size: 0.9rem;
     color: #64748b;
     background-color: #f1f5f9;
+}
+
+/* Estilo do ícone USER */
+.user-icon-container {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.user-icon {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #e0f2fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.user-icon:hover {
+    background-color: #2d89ef;
+    color: white;
+}
+
+.user-container {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }

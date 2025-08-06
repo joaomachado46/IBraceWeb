@@ -267,3 +267,36 @@ footer {
         gap: 1rem;
     }
 }
+
+/* Estilo do ícone USER */
+.user-icon-container {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.user-icon {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #e0f2fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.user-icon:hover {
+    background-color: #2d89ef;
+    color: white;
+}
+
+.user-container {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
