@@ -1,44 +1,57 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Animação ao rolar a página
+document.addEventListener('DOMContentLoaded', function () {
+    const products = document.querySelectorAll('.product');
+
+    // Animação inicial
+    setTimeout(() => {
+        products.forEach((product, index) => {
+            setTimeout(() => {
+                product.classList.add('animated');
+            }, 150 * index);
+        });
+    }, 300);
+
+    // Modal functionality
     const modal = document.getElementById('modal');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
     const modalPrice = document.getElementById('modal-price');
     const modalClose = document.getElementById('modal-close');
+    const saibaMaisBtns = document.querySelectorAll('.saiba-mais');
 
-    // Função para abrir o modal e preencher info
-    function openModal(product) {
-        modalTitle.textContent = product.dataset.name;
-
-        // Usa a descrição completa se existir, senão usa a curta
-        const fullDesc = product.dataset.fullDesc || product.dataset.desc;
-
-        // Substitui quebras de linha por <br> para manter formatação
-        modalDesc.innerHTML = fullDesc.replace(/\n/g, "<br>");
-
-        modalPrice.textContent = product.dataset.price;
-        modal.style.display = 'flex';
-    }
-
-    // Fecha o modal
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-
-    // Fecha ao clicar no botão fechar
-    modalClose.addEventListener('click', closeModal);
-
-    // Fecha ao clicar fora do conteúdo do modal
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
+    saibaMaisBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const product = this.closest('.product');
+            modalTitle.textContent = product.dataset.name;
+            modalDesc.textContent = product.dataset.fullDesc;
+            modalPrice.textContent = product.dataset.price;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
     });
 
-    // Botões "Saiba Mais"
-    document.querySelectorAll('.saiba-mais').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const product = e.target.closest('.product');
-            openModal(product);
-        });
+    modalClose.addEventListener('click', function () {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
+
+// Animação ao rolar
+window.addEventListener('scroll', function () {
+    const products = document.querySelectorAll('.product:not(.animated)');
+    const windowHeight = window.innerHeight;
+
+    products.forEach(product => {
+        const productPosition = product.getBoundingClientRect().top;
+        if (productPosition < windowHeight - 100) {
+            product.classList.add('animated');
+        }
     });
 });

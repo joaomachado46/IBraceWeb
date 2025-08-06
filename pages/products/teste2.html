@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Produtos - iBrace</title>
+  <meta name="description" content="Conheça nossos produtos com tecnologia NFC para segurança infantil e familiar">
+  <link rel="icon" href="../img/iBraceColor.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f4f8;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #ffffff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .menu ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #2d89ef;
+      font-weight: 600;
+      font-size: 1.05rem;
+      position: relative;
+      transition: color 0.3s;
+      padding: 0.5rem 0;
+    }
+
+    .menu a.active {
+      color: #1b6cd7;
+    }
+
+    .menu a.active::after {
+      width: 100%;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: #2d89ef;
+      transition: width 0.3s ease;
+    }
+
+    .menu a:hover {
+      color: #1b6cd7;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .products-hero {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      text-align: center;
+      padding: 4rem 2rem;
+      color: white;
+      margin-bottom: 3rem;
+    }
+
+    .products-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      animation: slideIn 0.8s ease-out 0.2s both;
+    }
+
+    .products-hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      animation: slideIn 0.8s ease-out 0.4s both;
+    }
+
+    main {
+      padding: 0 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .product {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: visible;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .product.animated {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .product:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    }
+
+    .product-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #FF6B6B; /* Cor mais vibrante */
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2; /* Garante que fique acima da imagem */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+    .product img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+    transition: transform 0.4s ease;
+    position: relative; /* Adicionado */
+    z-index: 1; /* Garante que fique abaixo da badge */
+  }
+
+    .product:hover img {
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    .product h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+      color: #1f2937;
+    }
+
+    .product p {
+      margin-bottom: 1.5rem;
+      color: #4b5563;
+    }
+
+    .product-price {
+      font-size: 1.4rem;
+      color: #2d89ef;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #2d89ef, #3a9bff);
+      color: white;
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(45, 137, 239, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(45, 137, 239, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+    background-color: #ffffff;
+    margin: 2% auto; /* Margem reduzida para telas pequenas */
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    animation: modalOpen 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 90vh; /* Altura máxima */
+    overflow-y: auto; /* Scroll interno se necessário */
+  }
+
+ /* Ajuste para telas pequenas */
+  @media (max-width: 600px) {
+    .modal-content {
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-height: 85vh;
+    }
+    
+    #modal-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  }
+  
+    .modal-close {
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+      font-size: 1.8rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .modal-close:hover {
+      color: #1f2937;
+      transform: rotate(90deg);
+    }
+
+    #modal-title {
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    #modal-desc {
+      color: #4b5563;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      white-space: pre-line;
+    }
+
+    #modal-price {
+      font-size: 1.6rem;
+      color: #2d89ef;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      font-size: 0.9rem;
+      color: #64748b;
+      background-color: #f1f5f9;
+      margin-top: 4rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes modalOpen {
+      from { 
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .product-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .menu ul {
+        gap: 1rem;
+      }
+      
+      .products-hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="menu">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="index.html" class="active">Produtos</a></li>
+        <li><a href="#">Outra Página</a></li>
+        <li><a href="#">Contactos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="products-hero">
+    <h1>Nossas Soluções em Segurança NFC</h1>
+    <p>Descubra a inovação que protege o que mais importa para você</p>
+  </section>
+
+  <main>
+    <section class="product-list">
+      <article class="product"
+               data-name="Pulseira iBrace NFC Básica"
+               data-desc="Pulseira com identificação NFC para segurança básica, fácil de usar e confortável."
+               data-price="19,90€"
+               data-full-desc="A iBrace NFC Básica é ideal para quem procura uma solução simples, eficaz e acessível para reforçar a segurança de crianças, idosos ou pessoas com necessidades especiais. Fabricada com material hipoalergénico e resistente à água, é confortável para o uso diário e adapta-se facilmente a diferentes tamanhos de pulso.
+
+              Com um simples toque num smartphone com NFC, qualquer pessoa pode aceder às informações de emergência previamente configuradas, como nome, contacto dos pais ou responsáveis, alergias, grupo sanguíneo e outras indicações médicas importantes. Os dados são armazenados numa página segura, personalizável e de fácil atualização.
+
+              Características:
+              - Tecnologia NFC sem necessidade de bateria
+              - Página de emergência personalizada (nome, contactos, alergias, etc.)
+              - Material suave, durável e à prova de água
+              - Disponível em vários tamanhos e cores
+              - Leitura rápida com qualquer smartphone com NFC
+              - Ideal para crianças, idosos e pessoas com necessidades especiais">
+        <span class="product-badge">Mais Vendido</span>
+        <img src="img/nfcBraceColor.png" alt="Pulseira iBrace NFC Básica" />
+        <h2>Pulseira iBrace NFC Básica</h2>
+        <p>Solução essencial para identificação e segurança pessoal com tecnologia NFC.</p>
+        <span class="product-price">19,90€</span>
+        <button class="btn saiba-mais">Saiba Mais</button>
+      </article>
+
+      <article class="product"
+               data-name="Tag iBrace NFC Pet"
+               data-desc="Tag de identificação com NFC para cães, resistente à água, leve e segura."
+               data-price="14,90€"
+               data-full-desc="A iBrace Pet é uma tag de identificação moderna com tecnologia NFC, criada para garantir a segurança dos nossos amigos de quatro patas. Basta encostar um smartphone com NFC para aceder a uma página com as informações essenciais do animal, como nome, contactos do dono, morada, histórico médico ou alergias.
+
+              Fabricada em material resistente à água e com um design leve e discreto, é perfeita para uso diário. A tag pode ser facilmente presa à coleira do cão e não necessita de bateria.
+
+              Ideal para situações de perda ou emergência, a iBrace Pet permite que qualquer pessoa possa ajudar o animal a regressar a casa com rapidez e segurança.
+
+              Características:
+              - Tecnologia NFC (sem bateria)
+              - Página personalizada com dados do cão e do dono
+              - Resistente à água e ao desgaste
+              - Compatível com qualquer coleira
+              - Design leve, durável e confortável
+              - Sem necessidade de app ou emparelhamento
+              - Ideal para cães de todas as raças e tamanhos">
+        <img src="img/TagDogNfc.png" alt="Tag iBrace NFC Pet" />
+        <h2>Tag iBrace NFC Pet</h2>
+        <p>Proteção inteligente para seu animal de estimação com tecnologia NFC.</p>
+        <span class="product-price">14,90€</span>
+        <button class="btn saiba-mais">Saiba Mais</button>
+      </article>
+
+      <article class="product"
+               data-name="Kit Família iBrace"
+               data-desc="Pacote com 3 pulseiras personalizadas para toda a família, com funcionalidades completas."
+               data-price="89,90€"
+               data-full-desc="O Kit Família iBrace inclui 3 pulseiras NFC personalizadas, pensadas para garantir a segurança de toda a família de forma simples e eficaz.
+
+              Cada pulseira é configurada com uma página individual onde podes guardar informações importantes como contactos de emergência, alergias, grupo sanguíneo, e outras informações médicas ou pessoais relevantes. Ideal para crianças, idosos e qualquer membro da família que deseje ter os seus dados sempre acessíveis em caso de emergência.
+
+              Fabricadas com materiais resistentes, confortáveis e à prova de água, as pulseiras são ajustáveis para todos os tamanhos de pulso, garantindo conforto e durabilidade.
+
+              Características:
+              - Inclui 3 pulseiras NFC personalizadas
+              - Página individual para cada pulseira com dados personalizados
+              - Material resistente e confortável
+              - À prova de água e uso diário
+              - Fácil leitura com qualquer smartphone com NFC
+              - Ideal para famílias que procuram segurança completa
+              - Atualização simples e rápida das informações via web">
+        <span class="product-badge">Economize 15%</span>
+        <img src="img/nfcBrace.jpg" alt="Kit Família iBrace" />
+        <h2>Kit Família iBrace</h2>
+        <p>Proteção completa para toda a família com tecnologia NFC avançada.</p>
+        <span class="product-price">89,90€</span>
+        <button class="btn saiba-mais">Saiba Mais</button>
+      </article>
+    </section>
+  </main>
+
+  <!-- Modal Popup -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="modal-close" class="modal-close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-desc"></p>
+      <p><strong>Preço:</strong> <span id="modal-price"></span></p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 iBrace. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // Animação ao rolar a página
+    document.addEventListener('DOMContentLoaded', function() {
+      const products = document.querySelectorAll('.product');
+      
+      // Animação inicial
+      setTimeout(() => {
+        products.forEach((product, index) => {
+          setTimeout(() => {
+            product.classList.add('animated');
+          }, 150 * index);
+        });
+      }, 300);
+
+      // Modal functionality
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDesc = document.getElementById('modal-desc');
+      const modalPrice = document.getElementById('modal-price');
+      const modalClose = document.getElementById('modal-close');
+      const saibaMaisBtns = document.querySelectorAll('.saiba-mais');
+
+      saibaMaisBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const product = this.closest('.product');
+          modalTitle.textContent = product.dataset.name;
+          modalDesc.textContent = product.dataset.fullDesc;
+          modalPrice.textContent = product.dataset.price;
+          modal.style.display = 'block';
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      modalClose.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+
+      window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+
+    // Animação ao rolar
+    window.addEventListener('scroll', function() {
+      const products = document.querySelectorAll('.product:not(.animated)');
+      const windowHeight = window.innerHeight;
+      
+      products.forEach(product => {
+        const productPosition = product.getBoundingClientRect().top;
+        if (productPosition < windowHeight - 100) {
+          product.classList.add('animated');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

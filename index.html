@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="img/iBraceColor.png" type="image/png" />
     <title>iBrace - Segurança Infantil com NFC</title>
+    <link rel="icon" href="img/iBraceColor.png" type="image/png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -14,60 +15,58 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="pages/products/index.html">Produtos</a></li>
                 <li><a href="#">Outra Página</a></li>
-                <li><a href="#">Contactos</a></li>
+                <li><a href="pages/contacto/index.html">Contactos</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <img src="img/iBraceColor.png" alt="iBrace logo" />
-        <p>
-            Uma pulseira. Várias funções.<br />
-            Segurança, saúde e tranquilidade para toda a família.<br />
-            Com tecnologia NFC que fala por si quando é mais preciso.
-        </p>
-        <a class="cta-button" href="#" id="btn-saber-mais">Quero Saber Mais</a>
+        <div class="hero-content">
+            <img src="img/iBraceColor.png" alt="iBrace logo" />
+            <h1>Uma pulseira. Várias funções.</h1>
+            <p>Segurança, saúde e tranquilidade para toda a família. Com tecnologia NFC que fala por si quando é mais preciso.</p>
+            <a class="cta-button pulse" href="pages/products/index.html">Ver Produtos Disponíveis</a>
+        </div>
     </section>
 
     <section class="features">
         <div class="feature">
+            <img src="img/nfc-icon.png" alt="NFC" />
             <h3>Identificação NFC Instantânea</h3>
-            <p>Permite que qualquer pessoa com um smartphone compatível leia a pulseira e aceda imediatamente a contactos de emergência e instruções personalizadas, garantindo rápida assistência.</p>
+            <p>Permite leitura imediata por smartphone com acesso a contactos e instruções de emergência.</p>
         </div>
         <div class="feature">
+            <img src="img/location-icon.png" alt="Localização" />
             <h3>Registo Seguro da Localização</h3>
-            <p>Ao ler a pulseira, a localização do leitor é automaticamente registada com autorização, garantindo segurança e acompanhamento em tempo real. Além disso, é enviado um email automático com a localização para os contactos de emergência configurados.</p>
+            <p>A localização do leitor é registada automaticamente com envio de email aos contactos.</p>
         </div>
         <div class="feature">
+            <img src="img/browser-icon.png" alt="Navegador" />
             <h3>Uso Imediato Sem Apps</h3>
-            <p>Funciona diretamente no navegador do smartphone, sem necessidade de instalar aplicações adicionais — rápido, simples e acessível para todos.</p>
+            <p>Funciona diretamente no navegador — sem necessidade de instalar aplicações.</p>
         </div>
     </section>
 
-
     <main class="hero">
-        <h1>Páginas das Pulseiras</h1>
-        <p>Cada pulseira tem a sua própria página com dados personalizados da criança.</p>
+        <h1>Página de exemplo</h1>
+        <p>Cada pulseira tem uma página com dados personalizados.</p>
 
-        <div class="pages-buttons" style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
-            <a href="#" class="btn" style="flex:1 1 150px; text-align:center;">Página da Francisca</a>
-            <a href="#" class="btn" style="flex:1 1 150px; text-align:center;">Página da Maria Luísa</a>
+        <div class="image-preview">
+            <img src="img/pagina_exemplo.png" alt="Página de exemplo" />
         </div>
     </main>
 
-    <section class="contact-section" style="background:#f5f8fa; padding:2rem 1rem; margin-top:3rem; border-radius:8px; max-width:480px; margin-left:auto; margin-right:auto;">
-        <button id="btn-contactar" class="btn" style="background:#2d89ef; color:#fff; padding:0.8rem 1.5rem; border:none; border-radius:4px; cursor:pointer; font-size:1.1rem; width:100%; max-width:300px; display:block; margin:0 auto 1rem auto;">
-            📩 Contactar
-        </button>
+    <section class="contact-section">
+        <button id="btn-contactar" class="btn">📩 Contactar</button>
 
-        <div id="contact-form" style="max-width:400px; margin:0 auto;">
+        <div id="contact-form">
             <h2>Fale connosco</h2>
             <form name="contact" method="POST" netlify>
                 <input type="hidden" name="form-name" value="contact" />
-                <input type="text" name="name" placeholder="Nome Completo" required style="width:100%; padding:0.5rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px;" />
-                <input type="email" name="email" placeholder="Email" required style="width:100%; padding:0.5rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px;" />
-                <textarea name="message" rows="6" placeholder="Sua Mensagem" required style="width:100%; padding:0.5rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px;"></textarea>
-                <button type="submit" class="btn" style="width:100%; background:#2d89ef; color:#fff; padding:0.75rem; border:none; border-radius:4px; font-size:1rem;">Enviar</button>
+                <input type="text" name="name" placeholder="Nome Completo" required />
+                <input type="email" name="email" placeholder="Email" required />
+                <textarea name="message" rows="6" placeholder="Sua Mensagem" required></textarea>
+                <button type="submit">Enviar</button>
             </form>
         </div>
     </section>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iBrace - Segurança Infantil com NFC</title>
+  <link rel="icon" href="img/iBraceColor.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f4f8;
+      color: #1f2937;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Animação de pulsação para o logo */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Animação de flutuação */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Animação de fade-in */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Animação de slide-in */
+    @keyframes slideIn {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    header {
+      background-color: #ffffff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .menu ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #2d89ef;
+      font-weight: 600;
+      font-size: 1.05rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: #2d89ef;
+      transition: width 0.3s ease;
+    }
+
+    .menu a:hover {
+      color: #1b6cd7;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Bolhas animadas no background */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="5" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="70" r="8" fill="rgba(255,255,255,0.1)"/><circle cx="150" cy="30" r="10" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="120" r="7" fill="rgba(255,255,255,0.1)"/><circle cx="170" cy="150" r="5" fill="rgba(255,255,255,0.1)"/><circle cx="100" cy="180" r="8" fill="rgba(255,255,255,0.1)"/></svg>');
+      animation: float 15s infinite ease-in-out;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero img {
+      border-radius: 10px;
+      width: 120px;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite ease-in-out, fadeIn 1s ease-out;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      animation: slideIn 0.8s ease-out 0.2s both;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      animation: slideIn 0.8s ease-out 0.4s both;
+    }
+
+    .cta-button {
+    background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+    color: white;
+    padding: 1rem 2.5rem;
+    border: none;
+     text-decoration: none; /* Isso remove o sublinhado */
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+.cta-button::before {
+    content: '';
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #FF8E53, #FF6B6B);
+    transition: all 0.6s ease;
+    z-index: -1;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.cta-button:hover::before {
+    left: 0;
+    animation: shine 1.5s infinite;
+}
+
+.cta-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+}
+
+@keyframes shine {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+/* Efeito de pulso para chamar atenção */
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+/* Adicione esta classe se quiser um efeito de pulso contínuo */
+.cta-button.pulse {
+    animation: pulse-glow 2s infinite;
+}
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 4rem 2rem;
+      background-color: #ffffff;
+    }
+
+    .feature {
+      max-width: 300px;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .feature.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .feature img {
+      width: 60px;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .feature:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Animação para as features */
+    @keyframes featureAnimation {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    main.hero {
+      background-color: #f8fafc;
+      color: #1f2937;
+      padding: 4rem 2rem;
+    }
+
+    .pages-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .pages-buttons .btn {
+      text-decoration: none;
+      padding: 1rem;
+      background: #e2e8f0;
+      border-radius: 8px;
+      width: 180px;
+      text-align: center;
+      color: #1f2937;
+      font-weight: 600;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    .pages-buttons .btn.animated {
+      opacity: 1;
+      transform: scale(1);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .pages-buttons .btn:hover {
+      background: #cbd5e1;
+      transform: translateY(-3px) scale(1.02);
+    }
+
+    .contact-section {
+      background: #ffffff;
+      padding: 3rem 1rem;
+      border-radius: 12px;
+      max-width: 480px;
+      margin: 3rem auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+
+    .contact-section.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-section h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .contact-section form input,
+    .contact-section form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s;
+    }
+
+    .contact-section form input:focus,
+    .contact-section form textarea:focus {
+      border-color: #2d89ef;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(45, 137, 239, 0.2);
+    }
+
+    .contact-section button {
+      background: #2d89ef;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .contact-section button:hover {
+      background: #1b6cd7;
+      transform: translateY(-2px);
+    }
+
+    .image-preview {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.6s ease;
+    }
+
+    .image-preview.animated {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .image-preview img {
+      max-width: 100%;
+      width: 388px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .image-preview img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-section {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 480px;
+      margin: 3rem auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    #btn-contactar {
+      background: #a777e3d4;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(45, 137, 239, 0.3);
+      margin-bottom: 0;
+    }
+
+    #btn-contactar:hover {
+      background: #a777e3d4;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(45, 137, 239, 0.4);
+    }
+
+    #contact-form {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    #contact-form.show {
+      max-height: 800px; /* Ajuste conforme necessário */
+      opacity: 1;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    #contact-form h2 {
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    #contact-form input,
+    #contact-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s;
+    }
+
+    #contact-form input:focus,
+    #contact-form textarea:focus {
+      border-color: #2d89ef;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(45, 137, 239, 0.2);
+    }
+
+    #contact-form textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    #contact-form button[type="submit"] {
+      background: #a777e3d4;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    #contact-form button[type="submit"]:hover {
+      background: #1b6cd7;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: #64748b;
+      background-color: #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pages/products/index.html">Produtos</a></li>
+        <li><a href="#">Outra Página</a></li>
+        <li><a href="#">Contactos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <img src="img/iBraceColor.png" alt="iBrace logo" />
+      <h1>Uma pulseira. Várias funções.</h1>
+      <p>Segurança, saúde e tranquilidade para toda a família. Com tecnologia NFC que fala por si quando é mais preciso.</p>
+      <a class="cta-button pulse" href="pages/products/index.html">Ver Produtos Disponíveis</a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <img src="img/nfc-icon.png" alt="NFC" />
+      <h3>Identificação NFC Instantânea</h3>
+      <p>Permite leitura imediata por smartphone com acesso a contactos e instruções de emergência.</p>
+    </div>
+    <div class="feature">
+      <img src="img/location-icon.png" alt="Localização" />
+      <h3>Registo Seguro da Localização</h3>
+      <p>A localização do leitor é registada automaticamente com envio de email aos contactos.</p>
+    </div>
+    <div class="feature">
+      <img src="img/browser-icon.png" alt="Navegador" />
+      <h3>Uso Imediato Sem Apps</h3>
+      <p>Funciona diretamente no navegador — sem necessidade de instalar aplicações.</p>
+    </div>
+  </section>
+
+  <main class="hero">
+    <h1>Página de exemplo</h1>
+    <p>Cada pulseira tem uma página com dados personalizados.</p>
+
+    <div class="image-preview">
+      <img src="img/pagina_exemplo.png" alt="Página de exemplo" />
+    </div>
+  </main>
+
+  <section class="contact-section">
+    <button id="btn-contactar" class="btn">📩 Contactar</button>
+
+    <div id="contact-form">
+      <h2>Fale connosco</h2>
+      <form name="contact" method="POST" netlify>
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="text" name="name" placeholder="Nome Completo" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <textarea name="message" rows="6" placeholder="Sua Mensagem" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 iBrace. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // Animação quando a página carrega
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animação das features
+      const features = document.querySelectorAll('.feature');
+      features.forEach((feature, index) => {
+        setTimeout(() => {
+          feature.classList.add('animated');
+        }, 200 * index);
+      });
+
+      // Animação dos botões
+      const buttons = document.querySelectorAll('.pages-buttons .btn');
+      buttons.forEach((btn, index) => {
+        setTimeout(() => {
+          btn.classList.add('animated');
+        }, 100 * index);
+      });
+
+      // Animação da imagem
+      setTimeout(() => {
+        document.querySelector('.image-preview').classList.add('animated');
+      }, 300);
+
+      // Animação da seção de contato
+      setTimeout(() => {
+        document.querySelector('.contact-section').classList.add('animated');
+      }, 400);
+
+      // Efeito de hover no botão de contato
+      const contactBtn = document.getElementById('btn-contactar');
+      const contactForm = document.getElementById('contact-form');
+      
+      contactBtn.addEventListener('click', function() {
+        contactForm.style.display = contactForm.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    // Animação quando o usuário rola a página
+    window.addEventListener('scroll', function() {
+      const elements = document.querySelectorAll('.feature, .pages-buttons .btn, .image-preview, .contact-section');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+        
+        if(elementPosition < screenPosition) {
+          element.classList.add('animated');
+        }
+      });
+    });
+
+    // Controle do formulário de contato
+    document.addEventListener('DOMContentLoaded', function() {
+      const contactBtn = document.getElementById('btn-contactar');
+      const contactForm = document.getElementById('contact-form');
+      
+      contactBtn.addEventListener('click', function() {
+        contactForm.classList.toggle('show');
+        
+        // Altera o texto do botão conforme o estado
+        if (contactForm.classList.contains('show')) {
+          contactBtn.textContent = '✖ Fechar';
+          contactBtn.style.backgroundColor = '#64748b';
+        } else {
+          contactBtn.textContent = '📩 Contactar';
+          contactBtn.style.backgroundColor = '#a777e3d4';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

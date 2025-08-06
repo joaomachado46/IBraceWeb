@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\pages\\products",
+    "\\pages\\products\\css"
   ],
-  "SelectedNode": "\\C:\\Users\\joaop\\OneDrive\\Ambiente de Trabalho\\Nova pasta\\IBraceHomePage",
+  "SelectedNode": "\\index.html",
   "PreviewInSolutionExplorer": false
 }
