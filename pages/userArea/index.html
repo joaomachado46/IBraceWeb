@@ -425,9 +425,12 @@ const API_ENDPOINTS = {
 };
 
 // Verifica se a página atual é a área do usuário
-function isUserAreaPage() {
+/*function isUserAreaPage() {
     return window.location.pathname.includes('/userArea/') || 
            window.location.pathname.includes('/pages/userArea/');
+}*/
+function isUserAreaPage() {
+    return window.location.pathname.toLowerCase().includes('/userarea/');
 }
 
 // Verifica se o usuário está logado
