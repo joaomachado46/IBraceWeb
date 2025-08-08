@@ -68,7 +68,10 @@ header {
 
 /* Hero Section */
 .products-hero {
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    /*background: linear-gradient(135deg, #6e8efb, #a777e3);*/
+    background: 
+        url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><circle cx='30' cy='30' r='5' fill='rgba(255,255,255,0.1)'/><circle cx='80' cy='70' r='8' fill='rgba(255,255,255,0.1)'/><circle cx='150' cy='30' r='10' fill='rgba(255,255,255,0.1)'/><circle cx='30' cy='120' r='7' fill='rgba(255,255,255,0.1)'/><circle cx='170' cy='150' r='5' fill='rgba(255,255,255,0.1)'/><circle cx='100' cy='180' r='8' fill='rgba(255,255,255,0.1)'/></svg>"),
+        linear-gradient(135deg, #6e8efb, #a777e3);
     text-align: center;
     padding: 4rem 2rem;
     color: white;
@@ -221,8 +224,8 @@ main {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     position: relative;
     animation: modalOpen 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    max-height: 90vh; /* Altura m·xima */
-    overflow-y: auto; /* Scroll interno se necess·rio */
+    max-height: 90vh; /* Altura m√°xima */
+    overflow-y: auto; /* Scroll interno se necess√°rio */
 }
 
 /* Ajuste para telas pequenas */
@@ -333,7 +336,7 @@ footer {
     }
 }
 
-/* Estilo do Ìcone USER */
+/* Estilo do √≠cone USER */
 .user-icon-container {
     position: absolute;
     right: 0;
