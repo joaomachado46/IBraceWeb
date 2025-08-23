@@ -5,6 +5,7 @@
 }
 
 body {
+    
     font-family: 'Inter', sans-serif;
     background-color: #f0f4f8;
     color: #1f2937;
@@ -12,7 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-/* AnimaÁ„o de pulsaÁ„o para o logo */
+/* Anima√ß√£o de pulsa√ß√£o para o logo */
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -27,7 +28,7 @@ body {
     }
 }
 
-/* AnimaÁ„o de flutuaÁ„o */
+/* Anima√ß√£o de flutua√ß√£o */
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -42,7 +43,7 @@ body {
     }
 }
 
-/* AnimaÁ„o de fade-in */
+/* Anima√ß√£o de fade-in */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -53,7 +54,7 @@ body {
     }
 }
 
-/* AnimaÁ„o de slide-in */
+/* Anima√ß√£o de slide-in */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -78,7 +79,7 @@ header {
 
 .menu {
     position: relative;
-    /* Para posicionar o Ìcone corretamente */
+    /* Para posicionar o √≠cone corretamente */
     width: 100%;
 }
 
@@ -193,12 +194,12 @@ header {
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     display: inline-block;
-    /* Garante que o bot„o n„o ocupe toda a largura */
+    /* Garante que o bot√£o n√£o ocupe toda a largura */
     white-space: nowrap;
     /* Impede a quebra de texto */
     text-align: center;
     min-width: max-content;
-    /* Garante que o bot„o tenha largura mÌnima adequada */
+    /* Garante que o bot√£o tenha largura m√≠nima adequada */
 }
 
 .cta-button::before {
@@ -242,7 +243,7 @@ header {
     }
 }
 
-/* Efeito de pulso para chamar atenÁ„o */
+/* Efeito de pulso para chamar aten√ß√£o */
 @keyframes pulse-glow {
     0% {
         box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
@@ -257,7 +258,7 @@ header {
     }
 }
 
-/* Adicione esta classe se quiser um efeito de pulso contÌnuo */
+/* Adicione esta classe se quiser um efeito de pulso cont√≠nuo */
 .cta-button.pulse {
     animation: pulse-glow 2s infinite;
 }
@@ -313,7 +314,7 @@ header {
     transform: scale(1.1);
 }
 
-/* AnimaÁ„o para as features */
+/* Anima√ß√£o para as features */
 @keyframes featureAnimation {
     from {
         opacity: 0;
@@ -490,7 +491,7 @@ main.hero {
 
 #contact-form.show {
     max-height: 800px;
-    /* Ajuste conforme necess·rio */
+    /* Ajuste conforme necess√°rio */
     opacity: 1;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
@@ -554,7 +555,7 @@ footer {
     background-color: #f1f5f9;
 }
 
-/* Estilo do Ìcone USER */
+/* Estilo do √≠cone USER */
 .user-icon-container {
     position: absolute;
     right: 0;
