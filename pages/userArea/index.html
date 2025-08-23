@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>iBrace - Área do Utilizador</title>
+    <link rel="icon" href="../../img/iBraceColor.png" type="image/png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
         * {
@@ -61,10 +62,10 @@
             transition: all 0.3s;
         }
 
-        .user-icon:hover {
-            background-color: #2d89ef;
-            color: white;
-        }
+            .user-icon:hover {
+                background-color: #2d89ef;
+                color: white;
+            }
 
         /* Dropdown Menu */
         .user-dropdown {
@@ -80,14 +81,21 @@
             overflow: hidden;
         }
 
-        .user-dropdown.show {
-            display: block;
-            animation: fadeIn 0.2s ease-out;
-        }
+            .user-dropdown.show {
+                display: block;
+                animation: fadeIn 0.2s ease-out;
+            }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-dropdown a {
@@ -99,18 +107,18 @@
             transition: background-color 0.3s;
         }
 
-        .user-dropdown a:hover {
-            background-color: #f0f4f8;
-            color: #2d89ef;
-        }
+            .user-dropdown a:hover {
+                background-color: #f0f4f8;
+                color: #2d89ef;
+            }
 
-        .user-dropdown a.logout {
-            color: #e53e3e;
-        }
+            .user-dropdown a.logout {
+                color: #e53e3e;
+            }
 
-        .user-dropdown a.logout:hover {
-            background-color: #fff5f5;
-        }
+                .user-dropdown a.logout:hover {
+                    background-color: #fff5f5;
+                }
 
         /* Modal de Login */
         .login-modal {
@@ -137,8 +145,15 @@
         }
 
         @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-content h2 {
@@ -151,25 +166,25 @@
             margin-bottom: 1.2rem;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+            }
 
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-        }
+            .form-group input {
+                width: 100%;
+                padding: 0.8rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                font-family: 'Inter', sans-serif;
+            }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #2d89ef;
-            box-shadow: 0 0 0 3px rgba(45,137,239,0.2);
-        }
+                .form-group input:focus {
+                    outline: none;
+                    border-color: #2d89ef;
+                    box-shadow: 0 0 0 3px rgba(45,137,239,0.2);
+                }
 
         .login-btn {
             width: 100%;
@@ -184,9 +199,9 @@
             margin-top: 0.5rem;
         }
 
-        .login-btn:hover {
-            background-color: #1b6cd7;
-        }
+            .login-btn:hover {
+                background-color: #1b6cd7;
+            }
 
         /* Área do Utilizador */
         .user-area {
@@ -237,15 +252,15 @@
             border: 1px solid #e2e8f0;
         }
 
-        .detail-card h3 {
-            color: #2d89ef;
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-        }
+            .detail-card h3 {
+                color: #2d89ef;
+                margin-bottom: 0.8rem;
+                font-size: 1rem;
+            }
 
-        .detail-card p {
-            margin-bottom: 0.5rem;
-        }
+            .detail-card p {
+                margin-bottom: 0.5rem;
+            }
 
         /* Formulário de Pedidos */
         .request-form {
@@ -254,27 +269,27 @@
             border-top: 1px solid #e2e8f0;
         }
 
-        .request-form h3 {
-            margin-bottom: 1rem;
-            color: #1f2937;
-        }
+            .request-form h3 {
+                margin-bottom: 1rem;
+                color: #1f2937;
+            }
 
-        .request-form textarea {
-            width: 100%;
-            min-height: 120px;
-            padding: 0.8rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            margin-bottom: 1rem;
-            resize: vertical;
-        }
+            .request-form textarea {
+                width: 100%;
+                min-height: 120px;
+                padding: 0.8rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                font-family: 'Inter', sans-serif;
+                margin-bottom: 1rem;
+                resize: vertical;
+            }
 
-        .request-form textarea:focus {
-            outline: none;
-            border-color: #2d89ef;
-            box-shadow: 0 0 0 3px rgba(45,137,239,0.2);
-        }
+                .request-form textarea:focus {
+                    outline: none;
+                    border-color: #2d89ef;
+                    box-shadow: 0 0 0 3px rgba(45,137,239,0.2);
+                }
 
         .submit-request {
             background-color: #2d89ef;
@@ -287,9 +302,9 @@
             transition: all 0.3s;
         }
 
-        .submit-request:hover {
-            background-color: #1b6cd7;
-        }
+            .submit-request:hover {
+                background-color: #1b6cd7;
+            }
 
         /* Mensagens */
         .message {
@@ -312,14 +327,14 @@
         }
 
         .login-modal {
-    /* Mantenha suas propriedades existentes */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-}
+            /* Mantenha suas propriedades existentes */
+            cursor: pointer; /* Muda o cursor para indicar que é clicável */
+        }
 
-.login-content {
-    cursor: auto; /* Mantém o cursor normal no conteúdo */
-    /* Mantenha suas outras propriedades */
-}
+        .login-content {
+            cursor: auto; /* Mantém o cursor normal no conteúdo */
+            /* Mantenha suas outras propriedades */
+        }
     </style>
 </head>
 <body>
