@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informações de Emergência</title>
+    <link rel="icon" href="img/iBrace_color.png" type="image/png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/estilo.css" />
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <div id="aviso-localizacao" class="alerta">
+            <i class="fas fa-location-dot"></i>
+            <div class="alerta-conteudo">
+                <strong>Solicitação de Localização</strong>
+                <p>Esta página precisa aceder à sua localização para ajudar em caso de emergência.</p>
+                <div class="gps-status">
+                    <span class="gps-status-icon">⏳</span>
+                    <span class="gps-status-text">Aguardando permissão...</span>
+                </div>
+                <div class="gps-status">
+                <button onclick="tentarObterLocalizacao()" id="btn-ativar-gps" class="botao-gps">
+                    <i class="fas fa-location-dot"></i> Ativar GPS
+                </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <img src="img/marialuisa.jpg" alt="Foto Francisca" class="foto-perfil">
+            <h2>Maria Luisa</h2>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-birthday-cake"></i>
+                </div>
+                <div class="info-content">
+                    <div class="info-label">Idade</div>
+                    <div class="info-value">3 anos</div>
+                </div>
+            </div>
+            
+            <div class="contactos-container">
+                <div class="contacto-item">
+                    <div class="contacto-icon">
+                        <i class="fas fa-male"></i>
+                    </div>
+                    <div class="contacto-label">Contacto Pai</div>
+                    <div class="contacto-value">+351910000000</div>
+                    <a href="tel:+351918574111" class="botao-chamada">
+                        <i class="fas fa-phone"></i> Ligar
+                    </a>
+                </div>
+                
+                <div class="contacto-item">
+                    <div class="contacto-icon">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <div class="contacto-label">Contacto Mãe</div>
+                    <div class="contacto-value">+351910000000</div>
+                    <a href="tel:+351916966759" class="botao-chamada">
+                        <i class="fas fa-phone"></i> Ligar
+                    </a>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-allergies"></i>
+                </div>
+                <div class="info-content">
+                    <div class="info-label">Alergias</div>
+                    <div class="info-value">Nenhuma conhecida</div>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-tint"></i>
+                </div>
+                <div class="info-content">
+                    <div class="info-label">Grupo Sanguíneo</div>
+                    <div class="info-value">O+</div>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="info-content">
+                    <div class="info-label">Informação de Emergência</div>
+                    <div class="info-value">Em caso de emergência, por favor entre em contacto com os pais.</div>
+                    <div class="info-value">Please, contact in case of emergency with the parents.</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <a href="https://www.ibrace.pt/" target="_blank">
+                    <img src="img/iBrace_color.png" style="border-radius: 10px" alt="iBrace logo">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/localizacao.js"></script>
+</body>
+</html>
