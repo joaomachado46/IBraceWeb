@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Manipular o envio do formulário
-    form.addEventListener('submit', function (e) {
+    /*form.addEventListener('submit', function (e) {
         e.preventDefault();
 
         // Validação básica
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.location.href = '../../index.html';
             }, 3000);
         }, 1500);
-    });
+    });*/
 
     // Função para mostrar mensagens
     function showMessage(text, type) {
