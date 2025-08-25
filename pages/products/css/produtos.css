@@ -69,9 +69,7 @@ header {
 /* Hero Section */
 .products-hero {
     /*background: linear-gradient(135deg, #6e8efb, #a777e3);*/
-    background: 
-        url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><circle cx='30' cy='30' r='5' fill='rgba(255,255,255,0.1)'/><circle cx='80' cy='70' r='8' fill='rgba(255,255,255,0.1)'/><circle cx='150' cy='30' r='10' fill='rgba(255,255,255,0.1)'/><circle cx='30' cy='120' r='7' fill='rgba(255,255,255,0.1)'/><circle cx='170' cy='150' r='5' fill='rgba(255,255,255,0.1)'/><circle cx='100' cy='180' r='8' fill='rgba(255,255,255,0.1)'/></svg>"),
-        linear-gradient(135deg, #6e8efb, #a777e3);
+    background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><circle cx='30' cy='30' r='5' fill='rgba(255,255,255,0.1)'/><circle cx='80' cy='70' r='8' fill='rgba(255,255,255,0.1)'/><circle cx='150' cy='30' r='10' fill='rgba(255,255,255,0.1)'/><circle cx='30' cy='120' r='7' fill='rgba(255,255,255,0.1)'/><circle cx='170' cy='150' r='5' fill='rgba(255,255,255,0.1)'/><circle cx='100' cy='180' r='8' fill='rgba(255,255,255,0.1)'/></svg>"), linear-gradient(135deg, #6e8efb, #a777e3);
     text-align: center;
     padding: 4rem 2rem;
     color: white;
@@ -99,9 +97,11 @@ main {
 
 .product-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+    justify-content: center;
     gap: 2.5rem;
     margin-top: 2rem;
+    padding: 0 1rem;
 }
 
 .product {
@@ -357,10 +357,10 @@ footer {
     transition: all 0.3s;
 }
 
-.user-icon:hover {
-    background-color: #2d89ef;
-    color: white;
-}
+    .user-icon:hover {
+        background-color: #2d89ef;
+        color: white;
+    }
 
 .user-container {
     position: absolute;
@@ -369,56 +369,64 @@ footer {
     transform: translateY(-50%);
 }
 
- .product-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .btn.comprar {
-            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn.comprar:hover {
-            background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-        
-        .btn.comprar:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn.saiba-mais {
-            flex: 1;
-            transition: all 0.3s;
-        }
-        
-        .btn.saiba-mais:hover {
-            transform: translateY(-2px);
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .btn.comprar.added {
-            animation: pulse 0.5s;
-            background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
-        }
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn.comprar {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .btn.comprar:hover {
+        background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn.comprar:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+.btn.saiba-mais {
+    flex: 1;
+    transition: all 0.3s;
+}
+
+    .btn.saiba-mais:hover {
+        transform: translateY(-2px);
+    }
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.btn.comprar.added {
+    animation: pulse 0.5s;
+    background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+}
