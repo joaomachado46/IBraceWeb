@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registo de Pet</title>
+    <link rel="icon" href="../../img/iBraceColor.png" type="image/png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>iBrace - Registo de Pet</h1>
+            <p>Preencha os dados abaixo para registar o tutor e o pet</p>
+        </header>
+
+        <main>
+            <form id="petForm" name="petRegisto" method="POST" data-netlify="true" action="/pages/thankyou.html">
+                <input type="hidden" name="form-name" value="petRegisto" />
+
+                <!-- Dados Pessoais Tutor -->
+                <fieldset>
+                    <legend>Dados do Tutor</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tutorNome">Nome Completo *</label>
+                            <input type="text" id="tutorNome" name="tutorNome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorEmail">Email *</label>
+                            <input type="email" id="tutorEmail" name="tutorEmail" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tutorTel">Telefone *</label>
+                            <input type="tel" id="tutorTel" name="tutorTel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorMorada">Morada</label>
+                            <textarea id="tutorMorada" name="tutorMorada" rows="2"></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Dados do Pet -->
+                <fieldset>
+                    <legend>Dados do Pet</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="petNome">Nome do Pet *</label>
+                            <input type="text" id="petNome" name="petNome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="petEspecie">Espécie / Raça *</label>
+                            <input type="text" id="petEspecie" name="petEspecie" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="petIdade">Idade *</label>
+                            <input type="number" id="petIdade" name="petIdade" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="petPeso">Peso (kg)</label>
+                            <input type="number" step="0.1" id="petPeso" name="petPeso">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tutorSecundarioNome">Tutor Secundário</label>
+                            <input type="text" id="tutorSecundarioNome" name="tutorSecundarioNome">
+                        </div>
+                        <div class="form-group">
+                            <label for="tutorSecundarioTel">Telefone Tutor Secundário</label>
+                            <input type="tel" id="tutorSecundarioTel" name="tutorSecundarioTel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="petVacinacao">Vacinação</label>
+                        <textarea id="petVacinacao" name="petVacinacao" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="petAlergias">Alergias / Condições</label>
+                        <textarea id="petAlergias" name="petAlergias" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vetNome">Veterinário</label>
+                            <input type="text" id="vetNome" name="vetNome">
+                        </div>
+                        <div class="form-group">
+                            <label for="vetTel">Telefone Veterinário</label>
+                            <input type="tel" id="vetTel" name="vetTel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="infoEmergencia">Informações de Emergência</label>
+                        <textarea id="infoEmergencia" name="infoEmergencia" rows="3"></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- Foto -->
+                <fieldset>
+                    <legend>Foto do Pet</legend>
+                    <div class="form-group">
+                        <label for="petFoto">Anexar Foto</label>
+                        <input type="file" id="petFoto" name="petFoto" accept="image/*">
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Registar Pet</button>
+                </div>
+            </form>
+        </main>
+
+        <footer>
+            <p>© 2023 iBrace. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>
