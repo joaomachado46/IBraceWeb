@@ -16,15 +16,13 @@
         </header>
 
         <main>
-            <form id="orderForm" name="carrinho" method="POST" data-netlify="true" action="/pages/carrinho/thankyou.html">
+            <form id="orderForm" name="carrinho" method="POST" data-netlify="true" action="/pages/carrinho/thankyou.html" enctype="multipart/form-data">
                 <input type="hidden" name="form-name" value="carrinho" />
-
-                <!-- Dados Pessoais -->
                 <fieldset>
-                    <legend>Dados Pessoais</legend>
+                    <legend>Dados Pessoais Tutor</legend>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="username">Utilizador *</label>
+                            <label for="username">Nome Utilizador *</label>
                             <input type="text" id="username" name="username" required>
                         </div>
                         <div class="form-group">
@@ -43,12 +41,43 @@
                             <input type="tel" id="phone" name="phone" required>
                         </div>
                     </div>
+                </fieldset>
+
+                <!-- Dados Pessoais -->
+                <fieldset>
+                    <legend>Dados Pessoais Pulseira</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="username">Nome a Utilizar *</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullName">Nome Completo *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                    </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="age">Idade</label>
-                            <input type="number" id="age" name="age" min="0" max="120">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
                         </div>
+                        <div class="form-group">
+                            <label for="age">Idade *</label>
+                            <input type="number" id="age" name="age" min="0" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Contacto 1 *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Contacto 2 *</label>
+                            <input type="tel" id="phone2" name="phone2" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        
                         <div class="form-group">
                             <label for="address">Morada</label>
                             <textarea id="address" name="address" rows="2"></textarea>
@@ -75,8 +104,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="emergencyContact">Contacto de Emergência *</label>
-                            <input type="tel" id="emergencyContact" name="emergencyContact" required>
+                            <label for="emergencyContact">Contacto de Emergência</label>
+                            <input type="tel" id="emergencyContact" name="emergencyContact">
                         </div>
                     </div>
 
@@ -96,13 +125,12 @@
                 <fieldset>
                     <legend>Detalhes da Encomenda</legend>
                     <div class="form-group">
-                        <label for="productQuantity">Quantidade de Pulseiras *</label>
-                        <input type="number" id="productQuantity" name="productQuantity" min="1" value="1" required>
-                    </div>
-
-                    <div class="form-group">
                         <label for="notes">Observações</label>
                         <textarea id="notes" name="notes" rows="3" placeholder="Alguma observação especial para a sua encomenda?"></textarea>
+                    </div>
+                     <div class="form-group">
+                        <label for="anexo">Foto da Pulseira</label>
+                        <input type="file" id="anexo" name="anexo">
                     </div>
                 </fieldset>
 
