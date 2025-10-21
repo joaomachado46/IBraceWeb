@@ -5,7 +5,7 @@
         const gpsStatusText = avisoElement.querySelector('.gps-status-text');
         
         // IDs de usuário
-        const userid = '525019daefcb432ca5c9562518bf1bc7';
+        const userid = '525019daefcb432ca5c9562518bf1bc6';
         
         // Função para atualizar o status do GPS na interface
         function atualizarStatusGPS(icon, texto, tipoAlerta) {
