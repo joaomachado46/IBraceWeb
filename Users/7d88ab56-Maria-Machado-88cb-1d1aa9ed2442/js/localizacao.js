@@ -46,11 +46,11 @@
                     atualizarStatusGPS('✅', 'Localização obtida com sucesso! Enviando dados...', 'sucesso');
                     
                     // Enviar para o servidor
-                    fetch('https://appnfcinformation-c8hah7bvgmeecvff.westeurope-01.azurewebsites.net/Localizacao', {
+                    // Enviar para o servidor via Netlify Function
+                    fetch('/.netlify/functions/localizacao', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': '*/*'
+                            'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
                             userKey: userid,
@@ -58,9 +58,15 @@
                             longitude: pos.coords.longitude.toString()
                         })
                     })
-                    .then(res => res)
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error('Erro ao enviar para o servidor (' + res.status + ')');
+                        }
+                        // a tua function devolve { ok: true }, por isso tentamos ler JSON
+                        return res.json().catch(() => ({}));
+                    })
                     .then(data => {
-                        console.log("✅ Enviado", data);
+                        console.log("✅ Enviado via Netlify Function", data);
                         setTimeout(() => {
                             avisoElement.classList.add('ocultar');
                         }, 3000);
@@ -69,6 +75,7 @@
                         console.error("❌ Erro:", err);
                         atualizarStatusGPS('⚠️', 'Localização obtida, mas erro ao enviar dados.', 'perigo');
                     });
+
                 },
                 function (err) {
                     console.error("Erro ao obter localização:", err);
