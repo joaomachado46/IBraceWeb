@@ -1,4 +1,4 @@
- // Elementos DOM
+// Elementos DOM
 const userIcon = document.getElementById('userIcon');
 const userDropdown = document.getElementById('userDropdown');
 const logoutBtn = document.getElementById('logoutBtn');
@@ -10,18 +10,14 @@ const userMessage = document.getElementById('userMessage');
 const requestForm = document.getElementById('requestForm');
 
 // API Configuration
-const API_BASE_URL = 'https://appnfcinformation-c8hah7bvgmeecvff.westeurope-01.azurewebsites.net/v1';
+const API_BASE_URL = 'https://appnfcinformation-c8hah7bvgmeecvff.westeurope-01.azurewebsites.net/v1/';
 const API_ENDPOINTS = {
-    login: '/auth/login',
-    userData: '/user/data',
-    requestChange: '/user/request-change'
+    login: 'auth/login',
+    userData: 'user/data',
+    requestChange: 'user/request-change'
 };
 
 // Verifica se a página atual é a área do usuário
-/*function isUserAreaPage() {
-    return window.location.pathname.includes('/userArea/') || 
-           window.location.pathname.includes('/pages/userArea/');
-}*/
 function isUserAreaPage() {
     return window.location.pathname.toLowerCase().includes('/userarea/');
 }
@@ -48,7 +44,7 @@ function resetLoginForm() {
     loginMessage.style.display = 'none';
 }
 
-// Carrega os dados do usuário
+// Carrega os dados do usuário/pet
 async function loadUserData() {
     const token = localStorage.getItem('authToken');
     if (!token) return;
@@ -73,26 +69,81 @@ async function loadUserData() {
     }
 }
 
-// Exibe os dados do usuário na página
+// Exibe os dados na página (humano OU pet)
 function displayUserData(data) {
-    document.getElementById('userFullName').textContent = data.fullName || '--';
-    document.getElementById('userEmail').textContent = data.email || '--';
-    document.getElementById('userAvatar').textContent = data.avatar || '👤';
-    
-    // Personal Info
-    document.getElementById('userName').textContent = data.name || '--';
-    document.getElementById('userAge').textContent = data.age || '--';
-    document.getElementById('userAddress').textContent = data.address || '--';
-    
-    // Contact Info
-    document.getElementById('userPhone').textContent = data.phone || '--';
-    document.getElementById('userContactEmail').textContent = data.contactEmail || '--';
-    document.getElementById('emergencyContact').textContent = data.emergencyContact || '--';
-    
-    // Medical Info
-    document.getElementById('userAllergies').textContent = data.allergies || 'Nenhuma registada';
-    document.getElementById('userMedication').textContent = data.medication || 'Nenhuma registada';
-    document.getElementById('bloodType').textContent = data.bloodType || '--';
+    const isPet = data.isPet === true;
+
+    const fullNameEl = document.getElementById('userFullName');
+    const emailEl = document.getElementById('userEmail');
+    const avatarEl = document.getElementById('userAvatar');
+
+    const personalTitle = document.querySelector('[data-section="personal-title"]');
+    const contactTitle = document.querySelector('[data-section="contact-title"]');
+    const medicalTitle = document.querySelector('[data-section="medical-title"]');
+
+    // Cabeçalho
+    fullNameEl.textContent = data.fullName || data.nome || '--';
+    emailEl.textContent = data.email || '--';
+    avatarEl.textContent = isPet ? '🐾' : (data.avatar || '👤');
+
+    // Campos base
+    const userNameEl = document.getElementById('userName');
+    const userAgeEl = document.getElementById('userAge');
+    const userAddressEl = document.getElementById('userAddress');
+
+    const userPhoneEl = document.getElementById('userPhone');
+    const userContactEmailEl = document.getElementById('userContactEmail');
+    const emergencyContactEl = document.getElementById('emergencyContact');
+
+    const userAllergiesEl = document.getElementById('userAllergies');
+    const userMedicationEl = document.getElementById('userMedication');
+    const bloodTypeEl = document.getElementById('bloodType');
+
+    if (!isPet) {
+        // ---------- UTILIZADOR NORMAL ----------
+        if (personalTitle) personalTitle.textContent = 'Informações Pessoais';
+        if (contactTitle) contactTitle.textContent = 'Contactos';
+        if (medicalTitle) medicalTitle.textContent = 'Informações Médicas';
+
+        userNameEl.textContent = data.name || '--';
+        userAgeEl.textContent = data.age || '--';
+        userAddressEl.textContent = data.address || '--';
+
+        userPhoneEl.textContent = data.phone || '--';
+        userContactEmailEl.textContent = data.contactEmail || '--';
+        emergencyContactEl.textContent = data.emergencyContact || '--';
+
+        userAllergiesEl.textContent = data.allergies || 'Nenhuma registada';
+        userMedicationEl.textContent = data.medication || 'Nenhuma registada';
+        bloodTypeEl.textContent = data.bloodType || '--';
+    } else {
+        // ---------- PET ----------
+        if (personalTitle) personalTitle.textContent = 'Informações do Animal';
+        if (contactTitle) contactTitle.textContent = 'Contactos / Tutores';
+        if (medicalTitle) medicalTitle.textContent = 'Informações de Saúde';
+
+        // Personal Info (nome, espécie, raça, idade, peso)
+        userNameEl.textContent = data.nome || data.fullName || '--';
+        userAgeEl.textContent = data.idade != null ? data.idade : '--';
+
+        let especieRaca = '';
+        if (data.especie) especieRaca += data.especie;
+        if (data.raca) especieRaca += (especieRaca ? ' - ' : '') + data.raca;
+        if (data.peso != null) especieRaca += (especieRaca ? ' | ' : '') + `${data.peso} kg`;
+        userAddressEl.textContent = especieRaca || '--';
+
+        // Contactos: tutores + email
+        userPhoneEl.textContent = data.tutorPrincipal || data.tutorPrincipalTel || '--';
+        userContactEmailEl.textContent = data.email || '--';
+
+        const contactoEmerg = data.tutorSecundario || data.tutorSecundarioTel || data.veterinarioTel;
+        emergencyContactEl.textContent = contactoEmerg || '--';
+
+        // Saúde
+        userAllergiesEl.textContent = data.alergias || 'Nenhuma registada';
+        userMedicationEl.textContent = data.vacinacao || 'Nenhuma registada';
+        bloodTypeEl.textContent = data.infoEmergencia || '--';
+    }
 }
 
 // Event Listeners
@@ -135,10 +186,7 @@ loginForm.addEventListener('submit', async (e) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                username,
-                password
-            })
+            body: JSON.stringify({ username, password })
         });
 
         const data = await response.json();
@@ -151,7 +199,6 @@ loginForm.addEventListener('submit', async (e) => {
                 loginModal.style.display = 'none';
                 resetLoginForm();
                 
-                // Se estiver na página de usuário, recarrega para mostrar os dados
                 if (isUserAreaPage()) {
                     window.location.reload();
                 }
@@ -179,9 +226,7 @@ requestForm.addEventListener('submit', async (e) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({
-                request: message
-            })
+            body: JSON.stringify({ request: message })
         });
 
         if (response.ok) {
@@ -198,15 +243,9 @@ requestForm.addEventListener('submit', async (e) => {
 
 // Inicialização da página
 document.addEventListener('DOMContentLoaded', () => {
-    // Esconde a área do usuário inicialmente
-    //userArea.style.display = 'none';
-    
-    // Se não está logado E está na página de área do usuário
     if (!isLoggedIn() && isUserAreaPage()) {
         loginModal.style.display = 'flex';
-    } 
-    // Se está logado, carrega os dados
-    else if (isLoggedIn()) {
+    } else if (isLoggedIn()) {
         loadUserData();
     }
 });
