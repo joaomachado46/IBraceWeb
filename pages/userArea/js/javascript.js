@@ -9,12 +9,11 @@ const userArea = document.getElementById('userArea');
 const userMessage = document.getElementById('userMessage');
 const requestForm = document.getElementById('requestForm');
 
-// API Configuration
-const API_BASE_URL = 'https://appnfcinformation-c8hah7bvgmeecvff.westeurope-01.azurewebsites.net/v1/';
+// API Configuration - agora via Netlify Functions (NADA de Azure no front!)
 const API_ENDPOINTS = {
-    login: 'auth/login',
-    userData: 'user/data',
-    requestChange: 'user/request-change'
+    login: '/.netlify/functions/auth-login',
+    userData: '/.netlify/functions/user-data',
+    requestChange: '/.netlify/functions/request-change'
 };
 
 // Verifica se a página atual é a área do usuário
@@ -50,7 +49,8 @@ async function loadUserData() {
     if (!token) return;
 
     try {
-        const response = await fetch(API_BASE_URL + API_ENDPOINTS.userData, {
+        const response = await fetch(API_ENDPOINTS.userData, {
+            method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -129,9 +129,12 @@ function displayUserData(data) {
 
         document.getElementById('petVacinacao').textContent = data.vacinacao || 'Nenhuma registada';
         document.getElementById('petAlergias').textContent = data.alergias || 'Nenhuma registada';
-        document.getElementById('petVeterinarioNome').textContent = data.veterinarioNome || data.veterinario_nome || '--';
-        document.getElementById('petVeterinarioTel').textContent = data.veterinarioTel || data.veterinario_tel || '--';
-        document.getElementById('petInfoEmergencia').textContent = data.infoEmergencia || data.info_emergencia || '--';
+        document.getElementById('petVeterinarioNome').textContent =
+            data.veterinarioNome || data.veterinario_nome || '--';
+        document.getElementById('petVeterinarioTel').textContent =
+            data.veterinarioTel || data.veterinario_tel || '--';
+        document.getElementById('petInfoEmergencia').textContent =
+            data.infoEmergencia || data.info_emergencia || '--';
     }
 }
 
@@ -170,7 +173,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value;
     
     try {
-        const response = await fetch(API_BASE_URL + API_ENDPOINTS.login, {
+        const response = await fetch(API_ENDPOINTS.login, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -209,7 +212,7 @@ requestForm.addEventListener('submit', async (e) => {
     const message = document.getElementById('requestMessage').value;
     
     try {
-        const response = await fetch(API_BASE_URL + API_ENDPOINTS.requestChange, {
+        const response = await fetch(API_ENDPOINTS.requestChange, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
