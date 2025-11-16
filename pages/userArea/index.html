@@ -6,7 +6,7 @@
     <title>iBrace - Área do Utilizador</title>
     <link rel="icon" href="../../img/iBraceColor.png" type="image/png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/user-area.css" />
 </head>
 <body>
     <header>
@@ -57,26 +57,54 @@
 
         <div id="userMessage" class="message"></div>
 
-        <div class="user-details">
+        <!-- DETALHES USER (HUMANO) -->
+        <div class="user-details" id="humanDetails">
             <div class="detail-card">
-                <h3 data-section="personal-title">Informações Pessoais</h3>
-                <p><strong>Nome:</strong> <span id="userName">--</span></p>
-                <p><strong>Idade:</strong> <span id="userAge">--</span></p>
-                <p><strong>Morada:</strong> <span id="userAddress">--</span></p>
+                <h3>Informações Pessoais</h3>
+                <p><strong>Nome:</strong> <span id="humanName">--</span></p>
+                <p><strong>Idade:</strong> <span id="humanAge">--</span></p>
+                <p><strong>Morada:</strong> <span id="humanAddress">--</span></p>
             </div>
             
             <div class="detail-card">
-                <h3 data-section="contact-title">Contactos</h3>
-                <p><strong>Telefone:</strong> <span id="userPhone">--</span></p>
-                <p><strong>Email:</strong> <span id="userContactEmail">--</span></p>
-                <p><strong>Contacto de Emergência:</strong> <span id="emergencyContact">--</span></p>
+                <h3>Contactos</h3>
+                <p><strong>Telefone:</strong> <span id="humanPhone">--</span></p>
+                <p><strong>Email:</strong> <span id="humanContactEmail">--</span></p>
+                <p><strong>Contacto de Emergência:</strong> <span id="humanEmergencyContact">--</span></p>
             </div>
             
             <div class="detail-card">
-                <h3 data-section="medical-title">Informações Médicas</h3>
-                <p><strong>Alergias:</strong> <span id="userAllergies">Nenhuma registada</span></p>
-                <p><strong>Medicação:</strong> <span id="userMedication">Nenhuma registada</span></p>
-                <p><strong>Tipo Sanguíneo:</strong> <span id="bloodType">--</span></p>
+                <h3>Informações Médicas</h3>
+                <p><strong>Alergias:</strong> <span id="humanAllergies">Nenhuma registada</span></p>
+                <p><strong>Medicação:</strong> <span id="humanMedication">Nenhuma registada</span></p>
+                <p><strong>Tipo Sanguíneo:</strong> <span id="humanBloodType">--</span></p>
+            </div>
+        </div>
+
+        <!-- DETALHES PET -->
+        <div class="user-details" id="petDetails" style="display:none;">
+            <div class="detail-card">
+                <h3>Informações do Animal</h3>
+                <p><strong>Nome:</strong> <span id="petNome">--</span></p>
+                <p><strong>Espécie / Raça:</strong> <span id="petEspecieRaca">--</span></p>
+                <p><strong>Idade:</strong> <span id="petIdade">--</span></p>
+                <p><strong>Peso:</strong> <span id="petPeso">--</span></p>
+            </div>
+            
+            <div class="detail-card">
+                <h3>Tutores e Contactos</h3>
+                <p><strong>Tutor Principal:</strong> <span id="petTutorPrincipal">--</span></p>
+                <p><strong>Tutor Secundário:</strong> <span id="petTutorSecundario">--</span></p>
+                <p><strong>Email de contacto:</strong> <span id="petEmail">--</span></p>
+            </div>
+            
+            <div class="detail-card">
+                <h3>Informações de Saúde</h3>
+                <p><strong>Vacinação:</strong> <span id="petVacinacao">--</span></p>
+                <p><strong>Alergias:</strong> <span id="petAlergias">Nenhuma registada</span></p>
+                <p><strong>Veterinário:</strong> <span id="petVeterinarioNome">--</span></p>
+                <p><strong>Contacto Veterinário:</strong> <span id="petVeterinarioTel">--</span></p>
+                <p><strong>Info Emergência:</strong> <span id="petInfoEmergencia">--</span></p>
             </div>
         </div>
 
@@ -90,6 +118,6 @@
         </div>
     </div>
 
-    <script src="js/javascript.js"></script>
+    <script src="js/user-area.js"></script>
 </body>
 </html>

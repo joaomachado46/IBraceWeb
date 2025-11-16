@@ -77,72 +77,61 @@ function displayUserData(data) {
     const emailEl = document.getElementById('userEmail');
     const avatarEl = document.getElementById('userAvatar');
 
-    const personalTitle = document.querySelector('[data-section="personal-title"]');
-    const contactTitle = document.querySelector('[data-section="contact-title"]');
-    const medicalTitle = document.querySelector('[data-section="medical-title"]');
-
     // Cabeçalho
     fullNameEl.textContent = data.fullName || data.nome || '--';
     emailEl.textContent = data.email || '--';
     avatarEl.textContent = isPet ? '🐾' : (data.avatar || '👤');
 
-    // Campos base
-    const userNameEl = document.getElementById('userName');
-    const userAgeEl = document.getElementById('userAge');
-    const userAddressEl = document.getElementById('userAddress');
-
-    const userPhoneEl = document.getElementById('userPhone');
-    const userContactEmailEl = document.getElementById('userContactEmail');
-    const emergencyContactEl = document.getElementById('emergencyContact');
-
-    const userAllergiesEl = document.getElementById('userAllergies');
-    const userMedicationEl = document.getElementById('userMedication');
-    const bloodTypeEl = document.getElementById('bloodType');
+    const humanDetails = document.getElementById('humanDetails');
+    const petDetails = document.getElementById('petDetails');
 
     if (!isPet) {
         // ---------- UTILIZADOR NORMAL ----------
-        if (personalTitle) personalTitle.textContent = 'Informações Pessoais';
-        if (contactTitle) contactTitle.textContent = 'Contactos';
-        if (medicalTitle) medicalTitle.textContent = 'Informações Médicas';
+        humanDetails.style.display = 'grid';
+        petDetails.style.display = 'none';
 
-        userNameEl.textContent = data.name || '--';
-        userAgeEl.textContent = data.age || '--';
-        userAddressEl.textContent = data.address || '--';
+        document.getElementById('humanName').textContent = data.name || '--';
+        document.getElementById('humanAge').textContent = data.age || '--';
+        document.getElementById('humanAddress').textContent = data.address || '--';
 
-        userPhoneEl.textContent = data.phone || '--';
-        userContactEmailEl.textContent = data.contactEmail || '--';
-        emergencyContactEl.textContent = data.emergencyContact || '--';
+        document.getElementById('humanPhone').textContent = data.phone || '--';
+        document.getElementById('humanContactEmail').textContent = data.contactEmail || '--';
+        document.getElementById('humanEmergencyContact').textContent = data.emergencyContact || '--';
 
-        userAllergiesEl.textContent = data.allergies || 'Nenhuma registada';
-        userMedicationEl.textContent = data.medication || 'Nenhuma registada';
-        bloodTypeEl.textContent = data.bloodType || '--';
+        document.getElementById('humanAllergies').textContent = data.allergies || 'Nenhuma registada';
+        document.getElementById('humanMedication').textContent = data.medication || 'Nenhuma registada';
+        document.getElementById('humanBloodType').textContent = data.bloodType || '--';
     } else {
         // ---------- PET ----------
-        if (personalTitle) personalTitle.textContent = 'Informações do Animal';
-        if (contactTitle) contactTitle.textContent = 'Contactos / Tutores';
-        if (medicalTitle) medicalTitle.textContent = 'Informações de Saúde';
+        humanDetails.style.display = 'none';
+        petDetails.style.display = 'grid';
 
-        // Personal Info (nome, espécie, raça, idade, peso)
-        userNameEl.textContent = data.nome || data.fullName || '--';
-        userAgeEl.textContent = data.idade != null ? data.idade : '--';
+        document.getElementById('petNome').textContent = data.nome || data.fullName || '--';
 
         let especieRaca = '';
         if (data.especie) especieRaca += data.especie;
         if (data.raca) especieRaca += (especieRaca ? ' - ' : '') + data.raca;
-        if (data.peso != null) especieRaca += (especieRaca ? ' | ' : '') + `${data.peso} kg`;
-        userAddressEl.textContent = especieRaca || '--';
+        document.getElementById('petEspecieRaca').textContent = especieRaca || '--';
 
-        // Contactos: tutores + email
-        userPhoneEl.textContent = data.tutorPrincipal || data.tutorPrincipalTel || '--';
-        userContactEmailEl.textContent = data.email || '--';
+        document.getElementById('petIdade').textContent =
+            data.idade != null ? data.idade : '--';
 
-        const contactoEmerg = data.tutorSecundario || data.tutorSecundarioTel || data.veterinarioTel;
-        emergencyContactEl.textContent = contactoEmerg || '--';
+        document.getElementById('petPeso').textContent =
+            data.peso != null ? `${data.peso} kg` : '--';
 
-        // Saúde
-        userAllergiesEl.textContent = data.alergias || 'Nenhuma registada';
-        userMedicationEl.textContent = data.vacinacao || 'Nenhuma registada';
-        bloodTypeEl.textContent = data.infoEmergencia || '--';
+        document.getElementById('petTutorPrincipal').textContent =
+            data.tutorPrincipal || data.tutorPrincipalTel || data.tutor_principal_tel || '--';
+
+        document.getElementById('petTutorSecundario').textContent =
+            data.tutorSecundario || data.tutorSecundarioTel || data.tutor_secundario_tel || '--';
+
+        document.getElementById('petEmail').textContent = data.email || '--';
+
+        document.getElementById('petVacinacao').textContent = data.vacinacao || 'Nenhuma registada';
+        document.getElementById('petAlergias').textContent = data.alergias || 'Nenhuma registada';
+        document.getElementById('petVeterinarioNome').textContent = data.veterinarioNome || data.veterinario_nome || '--';
+        document.getElementById('petVeterinarioTel').textContent = data.veterinarioTel || data.veterinario_tel || '--';
+        document.getElementById('petInfoEmergencia').textContent = data.infoEmergencia || data.info_emergencia || '--';
     }
 }
 
