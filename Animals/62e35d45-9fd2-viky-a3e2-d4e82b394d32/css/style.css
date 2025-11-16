@@ -22,7 +22,7 @@
         body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   background:
-    url("img/backgroundPet2.png"),
+    url("../img/backgroundPet2.png"),
     linear-gradient(135deg, #6e8efb, #a777e3);
   background-repeat: no-repeat;
   background-size:  cover; /* ajusta o 600px ao teu gosto */
