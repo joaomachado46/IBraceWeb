@@ -1,19 +1,43 @@
 // netlify/functions/localizacao.js
 
+// Mapa pageId -> userKey real
+const userMap = {
+  // EXEMPLO:
+  // "ID da página" : "userKey real usada na Azure"
+  '7d88ab56-maria-machado-88cb-1d1aa9ed2442': '525019daefcb432ca5c9562518bf1bc6',
+
+  // quando tiveres outra página, acrescentas aqui:
+  // 'outra-page-id': 'outra-user-key'
+};
+
 exports.handler = async (event) => {
   try {
     if (event.httpMethod !== 'POST') {
       return { statusCode: 405, body: 'Método não permitido' };
     }
 
-    const { userKey, latitude, longitude } = JSON.parse(event.body || '{}');
+    // agora esperamos pageId, latitude, longitude
+    const { pageId, latitude, longitude } = JSON.parse(event.body || '{}');
 
-    if (!userKey || !latitude || !longitude) {
+    if (!pageId || !latitude || !longitude) {
       return { statusCode: 400, body: 'Parâmetros em falta' };
+    }
+
+    // ir buscar a userKey correta pelo pageId
+    const userKey = userMap[pageId];
+
+    if (!userKey) {
+      console.error('pageId desconhecido:', pageId);
+      return { statusCode: 404, body: 'Utilizador não encontrado para este pageId' };
     }
 
     const azureUrl = process.env.AZURE_LOCALIZACAO_URL;
     const azureApiKey = process.env.AZURE_API_KEY; // se tiveres
+
+    if (!azureUrl) {
+      console.error('AZURE_LOCALIZACAO_URL não está definida');
+      return { statusCode: 500, body: 'Configuração do servidor em falta' };
+    }
 
     const resp = await fetch(azureUrl, {
       method: 'POST',
@@ -23,7 +47,7 @@ exports.handler = async (event) => {
         ...(azureApiKey ? { 'X-Api-Key': azureApiKey } : {})
       },
       body: JSON.stringify({
-        userKey,
+        userKey: userKey,                 // <- já vai a userKey mapeada
         latitude: latitude.toString(),
         longitude: longitude.toString()
       })
