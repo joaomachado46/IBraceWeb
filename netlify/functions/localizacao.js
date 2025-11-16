@@ -5,7 +5,7 @@ const userMap = {
   // EXEMPLO:
   // "ID da página" : "userKey real usada na Azure"
   '7d88ab56-maria-machado-88cb-1d1aa9ed2442': '525019daefcb432ca5c9562518bf1bc6',
-  'f3a9b8c2-francisca-machado-8a2c-1234567890ab': '525019daefcb432ca5c9562518bf1bc7',
+  //'f3a9b8c2-francisca-machado-8a2c-1234567890ab': '525019daefcb432ca5c9562518bf1bc7',
 };
 
 exports.handler = async (event) => {
