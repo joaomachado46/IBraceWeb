@@ -2,10 +2,14 @@
 
 // Mapa pageId -> userKey real
 const userMap = {
+  // adicionar mais USERS aqui conforme necessário
   // Maria
   '7d88ab56-maria-machado-88cb-1d1aa9ed2442': '525019daefcb432ca5c9562518bf1bc6',
   // Francisca
-  'f3a9b8c2-francisca-machado-8a2c-1234567890ab': '525019daefcb432ca5c9562518bf1bc7'
+  'f3a9b8c2-francisca-machado-8a2c-1234567890ab': '525019daefcb432ca5c9562518bf1bc7',
+
+  // adicionar mais ANIMAIS aqui conforme necessário
+  '62e35d45-9fd2-viky-a3e2-d4e82b394d32': '525019daefcb432ca5c9562518bf1bc8'
 };
 
 exports.handler = async (event) => {
