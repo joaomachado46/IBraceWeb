@@ -71,7 +71,6 @@
                 <p><strong>Contacto de Emergência1:</strong> <span id="humanPhone">--</span></p>
                 <p><strong>Contacto de Emergência2:</strong> <span id="humanEmergencyContact">--</span></p>
                 <p><strong>Email:</strong> <span id="humanContactEmail">--</span></p>
-                
             </div>
             
             <div class="detail-card">
@@ -112,8 +111,57 @@
         <div class="request-form">
             <h3>Pedido de Alteração</h3>
             <p>Preencha o formulário abaixo para solicitar alterações nos seus dados:</p>
-            <form id="requestForm">
-                <textarea id="requestMessage" placeholder="Descreva o que deseja alterar e os novos dados..." required></textarea>
+
+            <form
+                id="requestForm"
+                name="user-change"
+                method="POST"
+                data-netlify="true"
+                action="thankyou.html">
+
+                <!-- obrigatório para Netlify Forms -->
+                <input type="hidden" name="form-name" value="user-change" />
+
+                <!-- tipo de registo -->
+                <input type="hidden" id="nfIsPet" name="isPet" />
+
+                <!-- dados comuns -->
+                <input type="hidden" id="nfFullName" name="fullName" />
+                <input type="hidden" id="nfEmail" name="email" />
+
+                <!-- HUMANOS -->
+                <input type="hidden" id="nfHumanName" name="humanName" />
+                <input type="hidden" id="nfHumanAge" name="humanAge" />
+                <input type="hidden" id="nfHumanAddress" name="humanAddress" />
+                <input type="hidden" id="nfHumanPhone" name="humanPhone" />
+                <input type="hidden" id="nfHumanEmergencyContact" name="humanEmergencyContact" />
+                <input type="hidden" id="nfHumanAllergies" name="humanAllergies" />
+                <input type="hidden" id="nfHumanMedication" name="humanMedication" />
+                <input type="hidden" id="nfHumanBloodType" name="humanBloodType" />
+
+                <!-- PETS -->
+                <input type="hidden" id="nfPetNome" name="petNome" />
+                <input type="hidden" id="nfPetEspecieRaca" name="petEspecieRaca" />
+                <input type="hidden" id="nfPetIdade" name="petIdade" />
+                <input type="hidden" id="nfPetPeso" name="petPeso" />
+                <input type="hidden" id="nfPetTutorPrincipal" name="petTutorPrincipal" />
+                <input type="hidden" id="nfPetTutorSecundario" name="petTutorSecundario" />
+                <input type="hidden" id="nfPetVacinacao" name="petVacinacao" />
+                <input type="hidden" id="nfPetAlergias" name="petAlergias" />
+                <input type="hidden" id="nfPetVeterinarioNome" name="petVeterinarioNome" />
+                <input type="hidden" id="nfPetVeterinarioTel" name="petVeterinarioTel" />
+                <input type="hidden" id="nfPetInfoEmergencia" name="petInfoEmergencia" />
+
+                <!-- mensagem manual do utilizador -->
+                <div class="form-group">
+                    <label for="requestMessage">Mensagem / Pedido de alteração</label>
+                    <textarea
+                        id="requestMessage"
+                        name="mensagem"
+                        placeholder="Descreva o que deseja alterar e os novos dados..."
+                        required></textarea>
+                </div>
+
                 <button type="submit" class="submit-request">Enviar Pedido</button>
             </form>
         </div>

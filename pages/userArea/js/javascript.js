@@ -16,6 +16,10 @@ const API_ENDPOINTS = {
     requestChange: '/.netlify/functions/request-change'
 };
 
+// guarda o último user carregado (para o form Netlify)
+let currentUserData = null;
+let currentIsPet = false;
+
 // Verifica se a página atual é a área do usuário
 function isUserAreaPage() {
     return window.location.pathname.toLowerCase().includes('/userarea/');
@@ -71,7 +75,11 @@ async function loadUserData() {
 
 // Exibe os dados na página (humano OU pet)
 function displayUserData(data) {
-    const isPet = data.isPet === true;
+    // guardar para usarmos depois no submit do form
+    currentUserData = data;
+    currentIsPet = data.isPet === true;
+
+    const isPet = currentIsPet;
 
     const fullNameEl = document.getElementById('userFullName');
     const emailEl = document.getElementById('userEmail');
@@ -204,13 +212,81 @@ loginForm.addEventListener('submit', async (e) => {
     }
 });
 
-// Request Change Form
+// Request Change Form - API + Netlify Form
 requestForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
+    e.preventDefault(); // vamos controlar o fluxo
+
     const token = localStorage.getItem('authToken');
     const message = document.getElementById('requestMessage').value;
-    
+
+    // 1) Preencher os campos hidden do Netlify Form com o que está no ecrã
+    try {
+        const isPet = currentIsPet === true;
+
+        // tipo de registo
+        const nfIsPet = document.getElementById('nfIsPet');
+        if (nfIsPet) nfIsPet.value = isPet ? 'true' : 'false';
+
+        // cabeçalho
+        const fullName = document.getElementById('userFullName')?.textContent || '';
+        const email = document.getElementById('userEmail')?.textContent || '';
+
+        const nfFullName = document.getElementById('nfFullName');
+        const nfEmail = document.getElementById('nfEmail');
+
+        if (nfFullName) nfFullName.value = fullName;
+        if (nfEmail) nfEmail.value = email;
+
+        if (!isPet) {
+            // ---------- HUMANOS ----------
+            const nfHumanName = document.getElementById('nfHumanName');
+            const nfHumanAge = document.getElementById('nfHumanAge');
+            const nfHumanAddress = document.getElementById('nfHumanAddress');
+            const nfHumanPhone = document.getElementById('nfHumanPhone');
+            const nfHumanEmergencyContact = document.getElementById('nfHumanEmergencyContact');
+            const nfHumanAllergies = document.getElementById('nfHumanAllergies');
+            const nfHumanMedication = document.getElementById('nfHumanMedication');
+            const nfHumanBloodType = document.getElementById('nfHumanBloodType');
+
+            if (nfHumanName) nfHumanName.value = document.getElementById('humanName')?.textContent || '';
+            if (nfHumanAge) nfHumanAge.value = document.getElementById('humanAge')?.textContent || '';
+            if (nfHumanAddress) nfHumanAddress.value = document.getElementById('humanAddress')?.textContent || '';
+            if (nfHumanPhone) nfHumanPhone.value = document.getElementById('humanPhone')?.textContent || '';
+            if (nfHumanEmergencyContact) nfHumanEmergencyContact.value = document.getElementById('humanEmergencyContact')?.textContent || '';
+            if (nfHumanAllergies) nfHumanAllergies.value = document.getElementById('humanAllergies')?.textContent || '';
+            if (nfHumanMedication) nfHumanMedication.value = document.getElementById('humanMedication')?.textContent || '';
+            if (nfHumanBloodType) nfHumanBloodType.value = document.getElementById('humanBloodType')?.textContent || '';
+        } else {
+            // ---------- PETS ----------
+            const nfPetNome = document.getElementById('nfPetNome');
+            const nfPetEspecieRaca = document.getElementById('nfPetEspecieRaca');
+            const nfPetIdade = document.getElementById('nfPetIdade');
+            const nfPetPeso = document.getElementById('nfPetPeso');
+            const nfPetTutorPrincipal = document.getElementById('nfPetTutorPrincipal');
+            const nfPetTutorSecundario = document.getElementById('nfPetTutorSecundario');
+            const nfPetVacinacao = document.getElementById('nfPetVacinacao');
+            const nfPetAlergias = document.getElementById('nfPetAlergias');
+            const nfPetVeterinarioNome = document.getElementById('nfPetVeterinarioNome');
+            const nfPetVeterinarioTel = document.getElementById('nfPetVeterinarioTel');
+            const nfPetInfoEmergencia = document.getElementById('nfPetInfoEmergencia');
+
+            if (nfPetNome) nfPetNome.value = document.getElementById('petNome')?.textContent || '';
+            if (nfPetEspecieRaca) nfPetEspecieRaca.value = document.getElementById('petEspecieRaca')?.textContent || '';
+            if (nfPetIdade) nfPetIdade.value = document.getElementById('petIdade')?.textContent || '';
+            if (nfPetPeso) nfPetPeso.value = document.getElementById('petPeso')?.textContent || '';
+            if (nfPetTutorPrincipal) nfPetTutorPrincipal.value = document.getElementById('petTutorPrincipal')?.textContent || '';
+            if (nfPetTutorSecundario) nfPetTutorSecundario.value = document.getElementById('petTutorSecundario')?.textContent || '';
+            if (nfPetVacinacao) nfPetVacinacao.value = document.getElementById('petVacinacao')?.textContent || '';
+            if (nfPetAlergias) nfPetAlergias.value = document.getElementById('petAlergias')?.textContent || '';
+            if (nfPetVeterinarioNome) nfPetVeterinarioNome.value = document.getElementById('petVeterinarioNome')?.textContent || '';
+            if (nfPetVeterinarioTel) nfPetVeterinarioTel.value = document.getElementById('petVeterinarioTel')?.textContent || '';
+            if (nfPetInfoEmergencia) nfPetInfoEmergencia.value = document.getElementById('petInfoEmergencia')?.textContent || '';
+        }
+    } catch (err) {
+        console.warn('Erro ao preencher campos Netlify (hidden):', err);
+    }
+
+    // 2) Enviar também para a tua API /request-change (com token)
     try {
         const response = await fetch(API_ENDPOINTS.requestChange, {
             method: 'POST',
@@ -223,7 +299,13 @@ requestForm.addEventListener('submit', async (e) => {
 
         if (response.ok) {
             showMessage(userMessage, 'Pedido enviado com sucesso!', 'success');
-            requestForm.reset();
+            // opcional: limpar textarea
+            // requestForm.reset();
+
+            // 3) Depois de tudo OK na tua API, submeter o form para o Netlify
+            setTimeout(() => {
+                requestForm.submit(); // POST normal -> Netlify Forms -> redirect para thankyou.html
+            }, 800);
         } else {
             throw new Error('Failed to submit request');
         }
