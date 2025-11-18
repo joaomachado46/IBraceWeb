@@ -16,7 +16,15 @@
         </header>
 
         <main>
-            <form id="petForm" name="petRegisto" method="POST" data-netlify="true" action="/pages/carrinho/thankyou.html">
+            <!-- ATENÇÃO: id="orderForm" para bater com o JS -->
+            <form
+                id="orderForm"
+                name="petRegisto"
+                method="POST"
+                data-netlify="true"
+                action="/pages/carrinho/thankyou.html"
+                enctype="multipart/form-data">
+
                 <input type="hidden" name="form-name" value="petRegisto" />
 
                 <!-- Dados Pessoais Tutor -->
@@ -112,20 +120,150 @@
                 <fieldset>
                     <legend>Foto do Pet</legend>
                     <div class="form-group">
-                        <label for="petFoto">Anexar Foto</label>
-                        <input type="file" id="petFoto" name="petFoto" accept="image/*">
+                        <label for="anexo">Anexar Foto</label>
+                        <!-- id="anexo" para o JS validar tamanho; name pode ser petFoto -->
+                        <input type="file" id="anexo" name="petFoto" accept="image/*">
+                        <small>Formatos aceites: imagem (JPG, PNG, etc.). Máx: 5MB.</small>
                     </div>
                 </fieldset>
+
+                <!-- Consentimentos RGPD -->
+                <div class="form-consent">
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="privacyConsent" name="privacyConsent"  style="width: 3%" required>
+                            Declaro que li e aceito a
+                            <a href="#" id="privacyLink">Política de Privacidade</a>
+                            e autorizo o tratamento dos meus dados pessoais e dos dados do meu animal,
+                            incluindo informação de saúde, para efeitos de criação e utilização da pulseira iBrace.
+                        </label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="marketingConsent" name="marketingConsent"  style="width: 3%">
+                            Autorizo a receção de comunicações de marketing e novidades da iBrace por email. (Opcional)
+                        </label>
+                    </div>
+                </div>
 
                 <div class="form-actions">
                     <button type="submit" class="submit-btn">Registar Pet</button>
                 </div>
             </form>
+
+            <!-- Mensagens -->
+            <div id="message" class="message hidden"></div>
+
+            <!-- Modal Política de Privacidade -->
+            <div id="privacyModal" class="modal">
+                <div class="modal-content">
+                    <span class="modal-close" id="privacyClose">&times;</span>
+                    <h2>Política de Privacidade iBrace</h2>
+                    <p>
+                        A iBrace trata os seus dados pessoais em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD) e restante legislação aplicável.
+                    </p>
+
+                    <h3>1. Responsável pelo Tratamento</h3>
+                    <p>
+                        O responsável pelo tratamento dos dados é a iBrace (designação comercial), podendo ser contactada através do email 
+                        <a href="mailto:ibrace@ibrace.pt">ibrace@ibrace.pt</a>.
+                    </p>
+
+                    <h3>2. Dados Pessoais Recolhidos</h3>
+                    <p>
+                        No âmbito deste formulário de encomenda, podem ser recolhidos os seguintes dados:
+                    </p>
+                    <ul>
+                        <li>Dados de identificação: nome, nome de utilizador, idade.</li>
+                        <li>Contactos: email, telefone, contactos de emergência.</li>
+                        <li>Dados de localização (associados à pulseira, se aplicável).</li>
+                        <li>Dados de saúde: alergias, medicação, tipo sanguíneo, outras informações médicas relevantes.</li>
+                        <li>Outros dados fornecidos voluntariamente no campo de observações.</li>
+                    </ul>
+
+                    <h3>3. Finalidades do Tratamento</h3>
+                    <p>Os dados serão tratados para as seguintes finalidades:</p>
+                    <ul>
+                        <li>Gestão e processamento da encomenda da pulseira iBrace.</li>
+                        <li>Configuração da pulseira com os dados necessários para utilização em contexto de emergência.</li>
+                        <li>Comunicações relacionadas com a encomenda, apoio ao cliente e alterações de dados.</li>
+                        <li>Cumprimento de obrigações legais.</li>
+                        <li>Envio de comunicações de marketing (apenas se tiver dado o seu consentimento específico).</li>
+                    </ul>
+
+                    <h3>4. Fundamento Jurídico</h3>
+                    <p>
+                        O tratamento dos seus dados pessoais é baseado:
+                    </p>
+                    <ul>
+                        <li>No seu consentimento explícito, especialmente no que respeita a dados de saúde e, se aplicável, dados de menores.</li>
+                        <li>Na execução de um contrato ou diligências pré-contratuais relacionadas com a encomenda da pulseira.</li>
+                        <li>No cumprimento de obrigações legais aplicáveis.</li>
+                    </ul>
+
+                    <h3>5. Dados de Menores</h3>
+                    <p>
+                        Quando a pulseira é destinada a menores, o tutor legal declara que é responsável pela criança e que presta o consentimento para o tratamento dos dados pessoais e de saúde do menor para as finalidades indicadas.
+                    </p>
+
+                    <h3>6. Prazo de Conservação</h3>
+                    <p>
+                        Os dados serão conservados pelo período necessário à prestação do serviço e ao cumprimento de obrigações legais. Alguns dados podem ser conservados por períodos superiores, em caso de obrigações fiscais ou legais específicas.
+                    </p>
+
+                    <h3>7. Partilha de Dados</h3>
+                    <p>
+                        Os dados poderão ser partilhados com:
+                    </p>
+                    <ul>
+                        <li>Prestadores de serviços tecnológicos e de alojamento de dados (por exemplo, plataformas de alojamento e backend), que atuam como subcontratantes.</li>
+                        <li>Entidades oficiais ou autoridades, quando tal for exigido por lei.</li>
+                    </ul>
+                    <p>
+                        Em qualquer caso, são adotadas medidas técnicas e organizativas adequadas para garantir a segurança e confidencialidade dos dados.
+                    </p>
+
+                    <h3>8. Direitos dos Titulares dos Dados</h3>
+                    <p>
+                        O titular dos dados pode, a qualquer momento, exercer os seus direitos de:
+                    </p>
+                    <ul>
+                        <li>Acesso aos dados pessoais;</li>
+                        <li>Retificação de dados inexatos ou incompletos;</li>
+                        <li>Apagamento dos dados, nos termos legalmente previstos;</li>
+                        <li>Limitação do tratamento;</li>
+                        <li>Portabilidade dos dados, quando aplicável;</li>
+                        <li>Oposição ao tratamento dos dados;</li>
+                        <li>Retirar o consentimento, quando o tratamento se baseie no consentimento.</li>
+                    </ul>
+                    <p>
+                        Para exercer estes direitos, pode contactar-nos através do email
+                        <a href="mailto:ibrace@ibrace.pt">ibrace@ibrace.pt</a>.
+                    </p>
+
+                    <h3>9. Reclamações</h3>
+                    <p>
+                        Tem ainda o direito de apresentar reclamação junto da autoridade de controlo competente em matéria de proteção de dados (por exemplo, a Comissão Nacional de Proteção de Dados - CNPD, em Portugal).
+                    </p>
+
+                    <h3>10. Segurança dos Dados</h3>
+                    <p>
+                        A iBrace implementa medidas técnicas e organizativas adequadas para proteger os seus dados pessoais contra perda, uso indevido, acesso não autorizado, divulgação ou alteração.
+                    </p>
+
+                    <p>
+                        Esta Política de Privacidade pode ser atualizada sempre que necessário. Recomendamos a sua consulta regular.
+                    </p>
+                </div>
+            </div>
         </main>
 
         <footer>
             <p>© 2023 iBrace. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

@@ -2,7 +2,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('orderForm');
     const messageDiv = document.getElementById('message');
 
-    // Preencher automaticamente alguns campos se existirem no localStorage
+    if (!form) return;
+
+    // --- Consentimento + modal ---
+    const privacyCheckbox = document.getElementById('privacyConsent');
+    const fileInput = document.getElementById('anexo');
+
+    const privacyLink = document.getElementById('privacyLink');
+    const privacyModal = document.getElementById('privacyModal');
+    const privacyClose = document.getElementById('privacyClose');
+
+    // --- Carregar automaticamente dados guardados ---
     const loadSavedData = () => {
         const savedData = JSON.parse(localStorage.getItem('ibraceFormData') || '{}');
 
@@ -14,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Salvar dados no localStorage enquanto o usuário preenche o formulário
+    // --- Guardar dados no localStorage enquanto o utilizador preenche ---
     const saveFormData = () => {
         const formData = {};
         const fields = form.querySelectorAll('input, select, textarea');
@@ -28,18 +38,81 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('ibraceFormData', JSON.stringify(formData));
     };
 
-    // Adicionar event listeners para salvar dados enquanto digita
+    // --- Adicionar event listeners para guardar enquanto escreve ---
     const formFields = form.querySelectorAll('input, select, textarea');
     formFields.forEach(field => {
         field.addEventListener('input', saveFormData);
         field.addEventListener('change', saveFormData);
     });
 
-    // Manipular o envio do formulário
-    /*form.addEventListener('submit', function (e) {
-        e.preventDefault();
+    // --- Funções de mensagens ---
+    function showMessage(text, type) {
+        if (!messageDiv) return;
 
-        // Validação básica
+        messageDiv.textContent = text;
+        messageDiv.className = `message ${type}`;
+        messageDiv.classList.remove('hidden');
+
+        if (type !== 'success') {
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+    }
+
+    function clearMessage() {
+        if (!messageDiv) return;
+        messageDiv.textContent = '';
+        messageDiv.className = 'message hidden';
+    }
+
+    // --- Modal da Política de Privacidade ---
+    if (privacyLink && privacyModal) {
+        privacyLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            privacyModal.style.display = 'block';
+        });
+    }
+
+    if (privacyClose && privacyModal) {
+        privacyClose.addEventListener('click', function () {
+            privacyModal.style.display = 'none';
+        });
+    }
+
+    window.addEventListener('click', function (e) {
+        if (e.target === privacyModal) {
+            privacyModal.style.display = 'none';
+        }
+    });
+
+    // --- Validação no submit (consentimento + ficheiro + required) ---
+    form.addEventListener('submit', function (e) {
+        clearMessage();
+
+        // 1) validar consentimento RGPD
+        if (privacyCheckbox && !privacyCheckbox.checked) {
+            e.preventDefault();
+            showMessage(
+                'Para prosseguir, tem de aceitar a Política de Privacidade e autorizar o tratamento dos dados.',
+                'error'
+            );
+            return;
+        }
+
+        // 2) validar tamanho do ficheiro (se existir)
+        if (fileInput && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB
+
+            if (file.size > maxSize) {
+                e.preventDefault();
+                showMessage('O ficheiro selecionado é demasiado grande. Tamanho máximo: 5MB.', 'error');
+                return;
+            }
+        }
+
+        // 3) validação básica dos campos obrigatórios
         const requiredFields = form.querySelectorAll('[required]');
         let isValid = true;
 
@@ -53,44 +126,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         if (!isValid) {
+            e.preventDefault();
             showMessage('Por favor, preencha todos os campos obrigatórios.', 'error');
             return;
         }
 
-        // Se chegou aqui, o formulário é válido
-        showMessage('A processar a sua encomenda...', 'info');
-
-        // Limpar dados salvos após envio bem-sucedido
+        // Se chegou aqui, deixa o Netlify tratar do submit normalmente
         localStorage.removeItem('ibraceFormData');
-
-        // Simular um atraso no processamento para melhor UX
-        setTimeout(() => {
-            // O Netlify vai processar automaticamente o formulário
-            showMessage('Encomenda enviada com sucesso! Obrigado.', 'success');
-
-            // Resetar o formulário após sucesso
-            form.reset();
-
-            // Redirecionar após alguns segundos
-            setTimeout(() => {
-                window.location.href = '../../index.html';
-            }, 3000);
-        }, 1500);
-    });*/
-
-    // Função para mostrar mensagens
-    function showMessage(text, type) {
-        messageDiv.textContent = text;
-        messageDiv.className = `message ${type}`;
-        messageDiv.classList.remove('hidden');
-
-        // Esconder a mensagem após 5 segundos (exceto para mensagens de sucesso)
-        if (type !== 'success') {
-            setTimeout(() => {
-                messageDiv.classList.add('hidden');
-            }, 5000);
-        }
-    }
+    });
 
     // Carregar dados salvos quando a página carrega
     loadSavedData();
